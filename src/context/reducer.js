@@ -4,7 +4,9 @@ import {
   ADD_ITEM,
   ADD_PERSON,
   SET_ITEM,
-  UNSET_ITEM
+  UNSET_ITEM,
+  CHANGE_CONTEXT_ITEM_DATA,
+  CALCULATE_TOTAL,
 } from './actions'
 
 const reducer = (state, action) => {
@@ -39,6 +41,21 @@ const reducer = (state, action) => {
       isActiveItem: false
     }
   }
+
+  if (action.type === CHANGE_CONTEXT_ITEM_DATA) {
+    return {
+      ...state,
+      items: action.payload.currItems
+    }
+  }
+
+  if (action.type === CALCULATE_TOTAL) {
+    return {
+      ...state,
+      total: action.payload.total
+    }
+  }
+
   throw new Error(`no such action: ${action.type}`);
 }
 

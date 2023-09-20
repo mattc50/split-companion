@@ -5,7 +5,9 @@ import {
   ADD_ITEM,
   ADD_PERSON,
   SET_ITEM,
-  UNSET_ITEM
+  UNSET_ITEM,
+  CHANGE_CONTEXT_ITEM_DATA,
+  CALCULATE_TOTAL
 } from './actions'
 
 const AppContext = React.createContext();
@@ -16,7 +18,8 @@ export const initialState = {
   people: [],
   numPeople: 0,
   activeItem: "",
-  isActiveItem: false
+  isActiveItem: false,
+  total: 0
 }
 
 const AppProvider = ({ children }) => {
@@ -42,6 +45,23 @@ const AppProvider = ({ children }) => {
     dispatch({ type: UNSET_ITEM })
   }
 
+  const changeContextVal = ({ itemId, name, value }) => {
+    const currItems = initialState.items;
+    const itemIndex = parseInt(itemId[itemId.length - 1]);
+    if (name === "item") currItems[itemIndex].item = value;
+    if (name === "price") currItems[itemIndex].price = value;
+    dispatch({ type: CHANGE_CONTEXT_ITEM_DATA, payload: { currItems } })
+  }
+
+  const calculateTotal = () => {
+    let total = 0;
+    for (const item of initialState.items) {
+      total += parseFloat(item.price);
+    }
+    total = total.toFixed(2)
+    dispatch({ type: CALCULATE_TOTAL, payload: { total } })
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -49,7 +69,9 @@ const AppProvider = ({ children }) => {
         addItem,
         addPerson,
         setActiveItem,
-        unsetActiveItem
+        unsetActiveItem,
+        changeContextVal,
+        calculateTotal
       }}
     >
       {children}

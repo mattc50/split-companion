@@ -11,31 +11,58 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const PRIMARY = "#0473DC";
 const PRIMARY_HEX = "4, 115, 220";
-
+const SECONDARY = "#212121";
+const SECONDARY_HEX = "33, 33, 33";
 
 
 const theme = createTheme({
   components: {
+    // helpful link: https://mui.com/material-ui/api/input-base/#css
     MuiInputBase: {
       styleOverrides: {
         root: {
+          '& .MuiInputBase-input': {
+            color: SECONDARY,
+            padding: "12px 11px",
+          },
+
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: `rgba(${PRIMARY_HEX}, .4)`,
+          },
+          '& .MuiOutlinedInput-input': {
+            '&.Mui-disabled': {
+              // opacity: "1 !important",
+              WebkitTextFillColor: `rgba(${SECONDARY_HEX}, 1)`,
+            }
+          },
           '&.Mui-disabled': {
-            // '.MuiOutlinedInput-notchedOutline'
             '& fieldset': {
               borderColor: `rgba(${PRIMARY_HEX}, 0.2) !important`
             }
           }
+        },
+        inputAdornedStart: {
+          textAlign: "right",
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      input: {
+        '& .Mui-disabled': {
+          color: `rgba(${SECONDARY_HEX}, 0.2) !important`,
+
         }
       }
     }
   },
+
   palette: {
     primary: {
       main: PRIMARY
     },
     text: {
       primary: PRIMARY,
-      secondary: "#212121"
+      secondary: SECONDARY
     }
   },
   typography: {
