@@ -13,7 +13,11 @@ import {
   DELETE_ITEM,
   DELETE_PERSON,
   CHANGE_CONTEXT_NAME_DATA,
-  RECALCULATE
+  RECALCULATE,
+  REWRITE_CLIPBOARD_CONTENT,
+  CHANGE_TAX,
+  CHANGE_TIP,
+  CHANGE_SPLIT_METHOD
 } from './actions'
 
 const AppContext = React.createContext();
@@ -26,6 +30,10 @@ export const initialState = {
   activeItem: "",
   isActiveItem: false,
   total: 0,
+  tax: 0,
+  tip: 0,
+  splitMethod: "equal",
+  clipboardContent: {}
 }
 
 const AppProvider = ({ children }) => {
@@ -213,6 +221,22 @@ const AppProvider = ({ children }) => {
     dispatch({ type: RECALCULATE, payload: currPeople })
   }
 
+  const changeTax = (tax) => {
+    dispatch({ type: CHANGE_TAX, payload: tax })
+  }
+
+  const changeTip = (tip) => {
+    dispatch({ type: CHANGE_TIP, payload: tip })
+  }
+
+  const changeSplitMethod = (splitMethod) => {
+    dispatch({ type: CHANGE_SPLIT_METHOD, payload: splitMethod })
+  }
+
+  // const rewriteCBContent = (content) => {
+  //   dispatch({ type: REWRITE_CLIPBOARD_CONTENT, payload: content })
+  // }
+
   // useEffect(() => {
   //   console.log('hi')
   // }, [initialState.items, initialState.people])
@@ -232,7 +256,11 @@ const AppProvider = ({ children }) => {
         removePersonFromSplit,
         deleteItem,
         deletePerson,
-        recalculate
+        recalculate,
+        // rewriteCBContent,
+        changeTax,
+        changeTip,
+        changeSplitMethod
       }}
     >
       {children}

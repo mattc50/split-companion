@@ -13,6 +13,8 @@ import RadioWrapper from './RadioWrapper'
 import SwitchWrapper from './SwitchWrapper'
 import { useAppContext } from '../context/appContext'
 import ConfirmPerson from './ConfirmPerson'
+import SectionHeader from './SectionHeader'
+import ConfirmButton from './ConfirmButton'
 
 const styles = {
   addIcon: {
@@ -29,20 +31,27 @@ const styles = {
     marginBottom: "0.5rem"
   },
   peopleBox: {
+    marginTop: "1rem",
     display: "flex",
     flexDirection: "column",
     gap: "16px"
-
+  },
+  grid: {
+    height: "100%",
+    position: "relative"
   }
 }
 
 const ConfirmForm = () => {
-  const { people, total } = useAppContext()
+  const { people, total, tax, tip, splitMethod, changeTip, changeTax, changeSplitMethod } = useAppContext()
 
-  const [tax, setTax] = useState(0);
-  const [tip, setTip] = useState(0);
+  // const [tax, setTax] = useState(0);
+  // const [tip, setTip] = useState(0);
+  const [newTax, setTax] = useState(tax);
+  const [newTip, setTip] = useState(tip);
 
-  const [splitMethod, setSplitMethod] = useState("equal")
+  // const [splitMethod, setSplitMethod] = useState("equal")
+  const [newSplitMethod, setSplitMethod] = useState(splitMethod)
   const [selfInCalc, setSelfInCalc] = useState(true)
   const [selfInText, setSelfInText] = useState(true)
 
@@ -61,6 +70,7 @@ const ConfirmForm = () => {
     }
 
     setTax(!e.target.value ? 0 : e.target.value)
+    changeTax(e.target.value)
   }
 
   const handleTip = (e) => {
@@ -81,11 +91,17 @@ const ConfirmForm = () => {
     }
 
     setTip(!e.target.value ? 0 : e.target.value)
+    changeTip(e.target.value)
+  }
+
+  const handleSplitMethod = (e) => {
+    setSplitMethod(e.target.value)
+    changeSplitMethod(e.target.value)
   }
 
   return (
     <React.Fragment>
-      <Grid container rowSpacing={4} columnSpacing={2}>
+      <Grid sx={styles.grid} container rowSpacing={4} columnSpacing={2}>
         <Grid item xs={5.5}>
           <InputWrapper
             htmlFor="tax"
@@ -137,7 +153,7 @@ const ConfirmForm = () => {
                   label="Equal"
                   value="equal"
                   checked={splitMethod === "equal" ? true : false}
-                  onChange={() => setSplitMethod("equal")}
+                  onChange={handleSplitMethod}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -146,13 +162,13 @@ const ConfirmForm = () => {
                   label="Proportional"
                   value="proportional"
                   checked={splitMethod === "proportional" ? true : false}
-                  onChange={() => setSplitMethod("proportional")}
+                  onChange={handleSplitMethod}
                 />
               </Grid>
             </Grid>
           </RadioGroup>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <SwitchWrapper
             label="Include yourself in calculations"
             checked={selfInCalc}
@@ -163,8 +179,9 @@ const ConfirmForm = () => {
             checked={selfInText}
             onChange={() => setSelfInText(!selfInText)}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
+          <SectionHeader use="People" />
           <Box sx={styles.peopleBox}>
             {people.map((person, index) => (
               <ConfirmPerson
@@ -182,6 +199,7 @@ const ConfirmForm = () => {
           </Box>
         </Grid>
       </Grid>
+
 
     </React.Fragment>
   )

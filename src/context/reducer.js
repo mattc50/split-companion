@@ -13,6 +13,10 @@ import {
   DELETE_ITEM,
   DELETE_PERSON,
   RECALCULATE,
+  REWRITE_CLIPBOARD_CONTENT,
+  CHANGE_TAX,
+  CHANGE_TIP,
+  CHANGE_SPLIT_METHOD
 } from './actions'
 
 const reducer = (state, action) => {
@@ -105,6 +109,34 @@ const reducer = (state, action) => {
     return {
       ...state,
       people: action.payload
+    }
+  }
+
+  if (action.type === REWRITE_CLIPBOARD_CONTENT) {
+    return {
+      ...state,
+      clipboardContent: action.payload
+    }
+  }
+
+  if (action.type === CHANGE_TAX) {
+    return {
+      ...state,
+      tax: action.payload
+    }
+  }
+
+  if (action.type === CHANGE_TIP) {
+    return {
+      ...state,
+      tip: action.payload
+    }
+  }
+
+  if (action.type === CHANGE_SPLIT_METHOD) {
+    return {
+      ...state,
+      splitMethod: action.payload
     }
   }
 

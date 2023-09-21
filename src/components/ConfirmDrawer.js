@@ -3,6 +3,7 @@ import { Box, SwipeableDrawer, Skeleton, Typography, Container } from '@mui/mate
 import { grey } from '@mui/material/colors';
 import React, { useState, useEffect } from 'react'
 import ConfirmForm from './ConfirmForm';
+import ConfirmButton from './ConfirmButton';
 
 const ConfirmDrawer = ({ open, toggleDrawer }) => {
   const iOS =
@@ -91,6 +92,7 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
             <ConfirmForm />
           </Container>
         </Box>
+        <ConfirmButton />
 
 
       </SwipeableDrawer>

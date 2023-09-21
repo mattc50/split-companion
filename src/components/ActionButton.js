@@ -24,24 +24,27 @@ const styles = {
   }
 }
 
-const ActionButton = ({ setOpen, toggleDrawer }) => {
-  const { items, activeItem, unsetActiveItem } = useAppContext();
-
-  const openModal = () => {
-    console.log("modal opening")
-  }
+const ActionButton = ({ toggleDrawer }) => {
+  const { people, items, activeItem, unsetActiveItem } = useAppContext();
 
   let itemName = "";
   if (activeItem) itemName = items.find(item => item.id === activeItem).item;
 
+  const setBtnText = () => {
+    if (people.length === 0 || items.length === 0) return "Please add items & people to proceed!"
+    return activeItem ? `Done Splitting${itemName ? ` ${itemName}` : ""}` : "Proceed to Tax, Tip, & Share"
+
+  }
+
   return (
     <Container sx={styles.root}>
       <Button
+        disabled={people.length === 0 || items.length === 0}
         variant="contained"
         sx={styles.button}
         onClick={activeItem ? unsetActiveItem : toggleDrawer(true)}
       >
-        {activeItem ? `Done Splitting${itemName ? ` ${itemName}` : ""}` : "Proceed to Tax, Tip, & Share"}
+        {setBtnText()}
       </Button>
     </Container>
   )

@@ -14,6 +14,7 @@ const ConfirmPerson = ({
   total
 }) => {
   // const [personTotal, setPersonTotal] = useState(0)
+  const { clipboardContent, rewriteCBContent } = useAppContext();
 
   const getTotal = () => {
     let total = 0;
@@ -27,7 +28,7 @@ const ConfirmPerson = ({
   const addTaxTipSplit = () => {
     const numTax = parseFloat(tax);
     const numTip = parseFloat(tip);
-    if (numPeople === 0) return;
+    if (numPeople === 0) return 0;
     if (splitMethod === "equal") {
       return (numTax + numTip) / numPeople;
     }
@@ -44,7 +45,11 @@ const ConfirmPerson = ({
   }
 
   const getGrandTotal = () => {
-    return getTotal() + addTaxTipSplit();
+    const grandTotal = getTotal() + addTaxTipSplit();
+    const currCBContent = clipboardContent;
+    currCBContent[name] = grandTotal;
+    // rewriteCBContent(currCBContent);
+    return grandTotal;
   }
 
   const styles = {
