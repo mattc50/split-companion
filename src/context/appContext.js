@@ -154,6 +154,7 @@ const AppProvider = ({ children }) => {
         delete person.dues[id];
       }
     }
+    calculateTotal(filterRemoved)
 
     // recalculate(id, price, currItems, currPeople)
 

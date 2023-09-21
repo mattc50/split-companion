@@ -17,12 +17,12 @@ const ConfirmPerson = ({
   const { clipboardContent, rewriteCBContent } = useAppContext();
 
   const getTotal = () => {
-    let total = 0;
+    let personTotal = 0;
     for (const value of Object.values(dues)) {
-      total += parseFloat(value)
+      personTotal += parseFloat(value)
     }
     // setPersonTotal(total);
-    return total
+    return personTotal
   }
 
   const addTaxTipSplit = () => {
@@ -30,14 +30,18 @@ const ConfirmPerson = ({
     const numTip = parseFloat(tip);
     if (numPeople === 0) return 0;
     if (splitMethod === "equal") {
+      console.log((numTax + numTip) / numPeople)
       return (numTax + numTip) / numPeople;
     }
     if (splitMethod === "proportional") {
       if (total === 0) return (numTax + numTip) / numPeople;
       const personTotal = getTotal();
+      console.log(total)
+      console.log(personTotal)
       if (personTotal === 0) return (numTax + numTip) / numPeople
       // console.log(personTotal)
       const ratio = personTotal / total;
+      console.log(ratio)
       // console.log(ratio);
       return (numTax + numTip) * ratio;
     }
