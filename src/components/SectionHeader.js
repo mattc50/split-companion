@@ -2,7 +2,8 @@ import React from 'react'
 
 import {
   Typography,
-  Button
+  Button,
+  Container
 } from '@mui/material'
 import { Add } from '@mui/icons-material'
 
@@ -40,22 +41,24 @@ const SectionHeader = ({ use, btnFunc }) => {
   }
 
   return (
-    <div style={styles.root}>
+    <Container sx={styles.root}>
       <div style={styles.text}>
         <Typography variant="h1" sx={styles.h1}>{use}</Typography>
         <Typography variant="h2" sx={styles.h2}>{chooseNum(use)}</Typography>
       </div>
-      <Button
-        disabled={isActiveItem}
-        startIcon={<Add />}
-        variant="contained"
-        elevation={0}
-        onClick={btnFunc}
-      >
-        Add
-      </Button>
+      {btnFunc &&
+        <Button
+          disabled={isActiveItem}
+          startIcon={<Add />}
+          variant="contained"
+          elevation={0}
+          onClick={btnFunc}
+        >
+          Add
+        </Button>
+      }
 
-    </div>
+    </Container>
   )
 }
 

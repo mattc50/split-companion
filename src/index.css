@@ -12,7 +12,10 @@
   --primary: #0473DC;
 }
 
+
 body {
+  height: 100vh;
+  position: relative;
   min-width: 390px;
   max-width: 678px;
   margin: 0 auto;

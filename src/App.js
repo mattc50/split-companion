@@ -62,11 +62,34 @@ const theme = createTheme({
     //     }
     //   }
     // }
+    MuiDrawer: {
+      styleOverrides: {
+        root: {
+          '& .MuiPaper-root': {
+            height: `calc(100% - 88px)`,
+            overflow: 'visible',
+          }
+        }
+      }
+    },
+    MuiContainer: {
+      styleOverrides: {
+
+        '& .PrivateSwipeArea-root': {
+          display: "none",
+          height: 0
+        }
+
+      }
+    }
   },
 
   palette: {
     primary: {
       main: PRIMARY
+    },
+    secondary: {
+      main: SECONDARY
     },
     text: {
       primary: PRIMARY,
@@ -76,7 +99,7 @@ const theme = createTheme({
   typography: {
     htmlFontSize: 16,
     fontFamily: '"SF Pro Text", "sans-serif"',
-    // fontSize: 0.875,
+    // fontSize: "0.875rem",
     h1: {
       fontFamily: '"Athletics", "sans-serif"',
       fontSize: "1.571rem",
@@ -92,6 +115,10 @@ const theme = createTheme({
       fontFamily: '"SF Pro Text", "sans-serif"',
       fontSize: "0.8rem",
       fontWeight: 300
+    },
+    button: {
+      textTransform: "none",
+      fontSize: "1rem"
     }
   }
 });
