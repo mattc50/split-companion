@@ -1,14 +1,17 @@
 import {
   Box,
+  Button,
+  IconButton,
   InputAdornment,
   OutlinedInput,
   TextField,
   Typography
 } from '@mui/material';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 
 import { useSwipe } from '../utils/useSwipe';
+import { Delete } from '@mui/icons-material';
 
 const PRIMARY_HEX = "4, 115, 220"
 const SECONDARY_HEX = "33, 33, 33";
@@ -29,12 +32,14 @@ const touchDevice = isTouchDevice();
 
 const Item = ({ id, item, price }) => {
   const {
+    items,
     activeItem,
     setActiveItem,
     unsetActiveItem,
     isActiveItem,
     changeContextVal,
-    calculateTotal
+    calculateTotal,
+    deleteItem
   } = useAppContext();
 
   // const ref = useRef(null);
@@ -51,6 +56,13 @@ const Item = ({ id, item, price }) => {
 
   const styles = {
     root: {
+      position: "relative",
+      // display: "flex",
+      // alignItems: "center"
+    },
+    container: {
+      position: "relative",
+      zIndex: 1,
       opacity: () => {
         if (activeItem !== id && isActiveItem) return "50%";
         if (!isActiveItem) return "100%"
@@ -63,10 +75,9 @@ const Item = ({ id, item, price }) => {
       padding: "8px !important",
       borderRadius: (theme) => `${theme.shape.borderRadius}px !important`,
       background: "linear-gradient(90deg, #F4FAFF 0%, #F8FBFE 50%, #F4FAFF 100%)",
-      transition: "outline 0.1s",
+      transition: "outline, transform 0.1s",
       outline: () => activeItem !== id ? "1px solid transparent" : `1px solid rgb(${PRIMARY_HEX})`,
       transform: () => swiped ? "translate(-50px)" : "none",
-      transition: "transform 0.1s"
     },
     itemField: {
       maxWidth: "200px",
@@ -88,6 +99,16 @@ const Item = ({ id, item, price }) => {
       right: 0,
       textAlign: "right",
       padding: "12px 11px 0 0"
+    },
+    deleteBtn: {
+      maxHeight: "48px",
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: 0,
+      margin: "auto 0",
+      zIndex: 0,
+      display: () => activeItem ? "none" : "block"
     }
   }
 
@@ -96,7 +117,8 @@ const Item = ({ id, item, price }) => {
     changeContextVal({
       itemId: id,
       name: e.target.name,
-      value: e.target.value
+      value: e.target.value,
+      items: items
     })
   }
 
@@ -119,9 +141,10 @@ const Item = ({ id, item, price }) => {
     changeContextVal({
       itemId: id,
       name: e.target.name,
-      value: !e.target.value ? 0 : e.target.value
+      value: !e.target.value ? 0 : e.target.value,
+      items: items
     })
-    calculateTotal();
+    calculateTotal(items);
   }
 
   const handleClick = (e) => {
@@ -173,6 +196,7 @@ const Item = ({ id, item, price }) => {
     touchEndX = e.screenX;
     if (checkDirection() === "left") {
       setSwiped(true);
+      // removing the class is precautionary; functionality seems to work without it
       document.getElementById(id).classList.remove("item-active")
       // document.getElementById(id).style.transform = "translateX(-50px)";
       // console.log(document.getElementById(id).classList)
@@ -187,49 +211,67 @@ const Item = ({ id, item, price }) => {
     }
   }
 
+  useEffect(() => {
+    setSwiped(false)
+  }, [items])
+
   return (
-    <Box
-      id={id}
-      sx={styles.root}
-      onClick={handleClick}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-    >
-      <div style={styles.fieldGroup}>
-        <TextField
-          disabled={isActiveItem}
-          onClick={(e) => e.stopPropagation()}
-          type="text"
-          name="item"
-          inputProps={{ "aria-label": "item" }}
-          placeholder="Item"
-          value={newItem}
-          onChange={handleItem}
-          variant="outlined"
-          sx={styles.itemField}
-        />
-        <div style={{ position: "relative" }}>
-          <OutlinedInput
-            onDrop={() => false}
+    <Box sx={styles.root}>
+      <Box
+        id={id}
+        sx={styles.container}
+        onClick={handleClick}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+      >
+        <div style={styles.fieldGroup}>
+          <TextField
             disabled={isActiveItem}
             onClick={(e) => e.stopPropagation()}
-            inputProps={{ "aria-label": "price" }}
-            placeholder="0"
-            value={newPrice}
-            className="price"
-            onChange={handlePrice}
-            type="number"
-            name="price"
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            type="text"
+            name="item"
+            inputProps={{ "aria-label": "item" }}
+            placeholder="Item"
+            value={newItem}
+            onChange={handleItem}
             variant="outlined"
-            sx={styles.priceField}
+            sx={styles.itemField}
           />
-          {/* <Typography sx={styles.priceStr} className="priceStr" variant="body1">{priceStr}</Typography> */}
+          <div style={{ position: "relative" }}>
+            <OutlinedInput
+              onDrop={() => false}
+              disabled={isActiveItem}
+              onClick={(e) => e.stopPropagation()}
+              inputProps={{ "aria-label": "price" }}
+              placeholder="0"
+              value={newPrice}
+              className="price"
+              onChange={handlePrice}
+              type="number"
+              name="price"
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+              variant="outlined"
+              sx={styles.priceField}
+            />
+            {/* <Typography sx={styles.priceStr} className="priceStr" variant="body1">{priceStr}</Typography> */}
+          </div>
         </div>
-      </div>
-    </Box >
+      </Box >
+      <IconButton
+        value={id}
+        size="large"
+        sx={styles.deleteBtn}
+        onClick={() => {
+          console.log(`removing item ${id}`)
+          deleteItem(id, items)
+        }
+        }
+      >
+        <Delete />
+      </IconButton>
+    </Box>
   )
 }
 

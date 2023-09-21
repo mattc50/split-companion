@@ -7,6 +7,10 @@ import {
   UNSET_ITEM,
   CHANGE_CONTEXT_ITEM_DATA,
   CALCULATE_TOTAL,
+  ADD_PERSON_TO_SPLIT,
+  REMOVE_PERSON_FROM_SPLIT,
+  DELETE_ITEM,
+  DELETE_PERSON,
 } from './actions'
 
 const reducer = (state, action) => {
@@ -45,14 +49,44 @@ const reducer = (state, action) => {
   if (action.type === CHANGE_CONTEXT_ITEM_DATA) {
     return {
       ...state,
-      items: action.payload.currItems
+      items: action.payload
     }
   }
 
   if (action.type === CALCULATE_TOTAL) {
     return {
       ...state,
-      total: action.payload.total
+      total: action.payload
+    }
+  }
+
+  if (action.type === ADD_PERSON_TO_SPLIT) {
+    return {
+      ...state,
+      items: action.payload
+    }
+  }
+
+  if (action.type === REMOVE_PERSON_FROM_SPLIT) {
+    return {
+      ...state,
+      items: action.payload
+    }
+  }
+
+  if (action.type === DELETE_ITEM) {
+    return {
+      ...state,
+      items: action.payload,
+      numItems: action.payload.length
+    }
+  }
+
+  if (action.type === DELETE_PERSON) {
+    return {
+      ...state,
+      people: action.payload,
+      numPeople: action.payload.length
     }
   }
 
