@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAppContext } from '../context/appContext'
 import { Avatar, Box, Typography } from '@mui/material'
 import { paint } from '../utils/colorPicker'
+import { teal } from '@mui/material/colors'
 
 const ConfirmPerson = ({
   index,
@@ -98,7 +99,7 @@ const ConfirmPerson = ({
         <Typography color="secondary" variant="body1">{name || `Anon ${index + 1}`}</Typography>
       </div>
       <div style={styles.prices}>
-        <Typography color="secondary" variant="body1">+ $ {addTaxTipSplit().toFixed(2)}</Typography>
+        <Typography color={teal[700]} variant="body1">+ $ {addTaxTipSplit().toFixed(2)}</Typography>
         <Typography sx={styles.total} color="secondary" variant="body1">$ {getGrandTotal().toFixed(2)}</Typography>
       </div>
     </Box >
