@@ -69,6 +69,7 @@ const ItemsContainer = () => {
             id={el.id}
             item={el.item}
             price={el.price}
+            split={el.split}
           // onTouchStart={onTouchStart}
           // onTouchMove={onTouchMove}
           // onTouchEnd={onTouchEnd}

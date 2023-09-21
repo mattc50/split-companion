@@ -46,8 +46,8 @@ const PeopleContainer = () => {
   }
 
   useEffect(() => {
-
-  }, [addPersonToSplit])
+    // console.log(people)
+  }, [people])
 
   return (
     <div style={styles.root}>
@@ -55,7 +55,7 @@ const PeopleContainer = () => {
       <div className="items-container" style={styles.container}>
 
         {people.map((el, index) => (
-          <Person key={index} id={`person-${index}`} name={el.name} dues={el.dues} />
+          <Person key={index} id={el.id} name={el.name} dues={el.dues} />
         ))}
       </div>
     </div>

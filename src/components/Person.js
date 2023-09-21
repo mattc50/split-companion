@@ -8,19 +8,24 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import { Delete } from '@mui/icons-material';
+import { blue, cyan, deepOrange, deepPurple, green, indigo, lightBlue, lightGreen, orange, pink, purple, red, teal } from '@mui/material/colors'
+
 
 const PRIMARY_HEX = "4, 115, 220"
 
 const Person = ({ id, name, dues }) => {
+  // console.log(name)
   const {
     items,
     people,
     activeItem,
     addPersonToSplit,
     removePersonFromSplit,
-    deletePerson
+    deletePerson,
+    changeNameVal
   } = useAppContext();
-  const [newName, setNewName] = useState(name);
+  const [newName, setNewName] = useState("");
+  const [newDues, setNewDues] = useState(dues);
   const [swiped, setSwiped] = useState(false);
 
   // const itemIndex = parseInt(id[id.length - 1]);
@@ -49,11 +54,11 @@ const Person = ({ id, name, dues }) => {
         // will be greater than any index in the items array.
         // if (items.length > 0) {
         if (activeItem) {
-          const itemIndex = parseInt(activeItem[activeItem.length - 1]);
+          const itemIndex = items.findIndex(el => el.id === activeItem)
           const itemSplit = items[itemIndex].split;
           // console.log(itemSplit)
           const isPersonInSplit = itemSplit.includes(id);
-          console.log(isPersonInSplit)
+          // console.log(isPersonInSplit)
           return !isPersonInSplit && activeItem ? "75%" : "100%";
         }
 
@@ -69,7 +74,7 @@ const Person = ({ id, name, dues }) => {
       },
       outline: () => {
         if (activeItem) {
-          const itemIndex = parseInt(activeItem[activeItem.length - 1]);
+          const itemIndex = items.findIndex(el => el.id === activeItem)
           const itemSplit = items[itemIndex].split;
           const isPersonInSplit = itemSplit.includes(id);
           return isPersonInSplit && activeItem ? `1px solid rgb(${PRIMARY_HEX})` : "1px solid transparent";
@@ -116,22 +121,58 @@ const Person = ({ id, name, dues }) => {
     }
   }
 
+  const paintAvatar = (name) => {
+    if (!name) return;
+    const i = name[0].toUpperCase();
+    if (i === "A") return '#b71c1c' || red[900];
+    if (i === "B") return '#0d47a1' || blue[900];
+    if (i === "C") return '#880e4f' || pink[900];
+    if (i === "D") return '#01579b' || lightBlue[900];
+    if (i === "E") return '#4a148c' || purple[900];
+    if (i === "F") return '#006064' || cyan[900];
+    if (i === "G") return '#311b92' || deepPurple[900];
+    if (i === "H") return '#004d40' || teal[900];
+    if (i === "I") return '#1a237e' || indigo[900];
+    if (i === "J") return '#1b5e20' || green[900];
+    if (i === "K") return '#e65100' || orange[900];
+    if (i === "L") return '#33691e' || lightGreen[900];
+    if (i === "M") return '#bf360c' || deepOrange[900];
+    if (i === "N") return '#e53935' || red[600];
+    if (i === "O") return '#1e88e5' || blue[600];
+    if (i === "P") return '#d81b60' || pink[600];
+    if (i === "Q") return '#039be5' || lightBlue[600];
+    if (i === "R") return '#8e24aa' || purple[600];
+    if (i === "S") return '#0097a7' || cyan[700];
+    if (i === "T") return '#5e35b1' || deepPurple[600];
+    if (i === "U") return '#00897b' || teal[600];
+    if (i === "V") return '#3949ab' || indigo[600];
+    if (i === "W") return '#43a047' || green[600];
+    if (i === "X") return '#ef6c00' || orange[800];
+    if (i === "Y") return '#689f38' || lightGreen[700];
+    if (i === "Z") return '#f4511e' || deepOrange[600];
+  }
+
   const handleName = (e) => {
     setNewName(e.target.value)
+    changeNameVal({
+      personId: id,
+      value: e.target.value,
+      people: people
+    })
   }
 
   const handleClick = (e) => {
     touchEndX = e.screenX;
     if (Math.abs(touchStartX - touchEndX) > 50) return;
     if (activeItem) {
-      const itemIndex = parseInt(activeItem[activeItem.length - 1]);
+      const itemIndex = items.findIndex(el => el.id === activeItem)
       const itemSplit = items[itemIndex].split;
       const isPersonInSplit = itemSplit.includes(id);
       if (!isPersonInSplit) {
-        console.log('ran add')
+        // console.log('ran add')
         addPersonToSplit(itemIndex, id, items, people);
       } else {
-        console.log('ran remove')
+        // console.log('ran remove')
         removePersonFromSplit(itemIndex, id, items, people);
       }
     }
@@ -143,8 +184,12 @@ const Person = ({ id, name, dues }) => {
   let touchEndX = 0
 
   const checkDirection = () => {
-    if (touchStartX - touchEndX > 50) return "left";
-    if (touchEndX - touchStartX > 50) return "right";
+    if (touchStartX - touchEndX > 50) {
+      return "left";
+    }
+    if (touchEndX - touchStartX > 50) {
+      return "right";
+    }
   }
 
   const onTouchStart = (e) => {
@@ -154,6 +199,7 @@ const Person = ({ id, name, dues }) => {
   const onTouchEnd = (e) => {
     if (activeItem) return;
     touchEndX = e.changedTouches[0].screenX
+    const test = checkDirection();
     if (checkDirection() === "left") {
       setSwiped(true);
       document.getElementById(id).classList.remove("item-active")
@@ -190,7 +236,11 @@ const Person = ({ id, name, dues }) => {
 
   useEffect(() => {
     setSwiped(false)
-  }, [people, handleClick])
+    // I believe these have to be included because the state of the component 
+    // persists across re-renders regardless of context.
+    setNewName(name)
+    setNewDues(dues)
+  }, [people, items])
 
   return (
     <Box sx={styles.root}>
@@ -204,7 +254,7 @@ const Person = ({ id, name, dues }) => {
         onMouseUp={onMouseUp}
       >
         <div style={styles.nameGroup}>
-          <Avatar>{newName === "" ? "A" : newName[0].toUpperCase()}</Avatar>
+          <Avatar style={{ backgroundColor: paintAvatar(name) }}>{newName === "" ? "A" : newName[0].toUpperCase()}</Avatar>
           <TextField
             type="text"
             inputProps={{ "aria-label": "name" }}
@@ -215,14 +265,15 @@ const Person = ({ id, name, dues }) => {
             sx={styles.nameField}
           />
         </div>
-        <Typography variant="body1">$ {addDues()}</Typography>
+        <Typography variant="body1">$ {addDues().toFixed(2)}</Typography>
       </Box >
       <IconButton
         value={id}
         size="large"
         sx={styles.deleteBtn}
         onClick={() => {
-          deletePerson(id, people)
+          // console.log(`deleting ${id}: ${name}`)
+          deletePerson(id, items, people)
         }}
       >
         <Delete />

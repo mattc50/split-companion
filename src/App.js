@@ -8,6 +8,7 @@ import {
 } from '@mui/material/styles';
 import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { blue } from '@mui/material/colors';
 
 const PRIMARY = "#0473DC";
 const PRIMARY_HEX = "4, 115, 220";
@@ -53,7 +54,14 @@ const theme = createTheme({
 
         }
       }
-    }
+    },
+    // MuiAvatar: {
+    //   styleOverrides: {
+    //     "& .MuiAvatarColorDefault": {
+    //       backgroundColor: blue
+    //     }
+    //   }
+    // }
   },
 
   palette: {
@@ -71,7 +79,7 @@ const theme = createTheme({
     // fontSize: 0.875,
     h1: {
       fontFamily: '"Athletics", "sans-serif"',
-      fontSize: "1.571em",
+      fontSize: "1.571rem",
     },
     h2: {
       fontFamily: '"SF Pro Text", "sans-serif"',
@@ -79,6 +87,11 @@ const theme = createTheme({
     },
     body1: {
       fontFamily: '"SF Pro Text", "sans-serif"'
+    },
+    body2: {
+      fontFamily: '"SF Pro Text", "sans-serif"',
+      fontSize: "0.8rem",
+      fontWeight: 300
     }
   }
 });

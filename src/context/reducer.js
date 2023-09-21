@@ -6,11 +6,13 @@ import {
   SET_ITEM,
   UNSET_ITEM,
   CHANGE_CONTEXT_ITEM_DATA,
+  CHANGE_CONTEXT_NAME_DATA,
   CALCULATE_TOTAL,
   ADD_PERSON_TO_SPLIT,
   REMOVE_PERSON_FROM_SPLIT,
   DELETE_ITEM,
   DELETE_PERSON,
+  RECALCULATE,
 } from './actions'
 
 const reducer = (state, action) => {
@@ -53,6 +55,13 @@ const reducer = (state, action) => {
     }
   }
 
+  if (action.type === CHANGE_CONTEXT_NAME_DATA) {
+    return {
+      ...state,
+      people: action.payload
+    }
+  }
+
   if (action.type === CALCULATE_TOTAL) {
     return {
       ...state,
@@ -77,16 +86,25 @@ const reducer = (state, action) => {
   if (action.type === DELETE_ITEM) {
     return {
       ...state,
-      items: action.payload,
-      numItems: action.payload.length
+      items: action.payload.filterRemoved,
+      numItems: action.payload.filterRemoved.length,
+      people: action.payload.currPeople
     }
   }
 
   if (action.type === DELETE_PERSON) {
     return {
       ...state,
-      people: action.payload,
-      numPeople: action.payload.length
+      people: action.payload.filterRemoved,
+      numPeople: action.payload.filterRemoved.length,
+      items: action.payload.currItems
+    }
+  }
+
+  if (action.type === RECALCULATE) {
+    return {
+      ...state,
+      people: action.payload
     }
   }
 

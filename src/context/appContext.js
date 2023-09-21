@@ -11,7 +11,9 @@ import {
   ADD_PERSON_TO_SPLIT,
   REMOVE_PERSON_FROM_SPLIT,
   DELETE_ITEM,
-  DELETE_PERSON
+  DELETE_PERSON,
+  CHANGE_CONTEXT_NAME_DATA,
+  RECALCULATE
 } from './actions'
 
 const AppContext = React.createContext();
@@ -51,11 +53,18 @@ const AppProvider = ({ children }) => {
 
   const changeContextVal = ({ itemId, name, value, items }) => {
     const currItems = items;
-    const itemIndex = parseInt(itemId[itemId.length - 1]);
+    const itemIndex = currItems.findIndex(el => el.id === itemId)
     // const itemIndex = currItems.indexOf(itemId);
     if (name === "item") currItems[itemIndex].item = value;
     if (name === "price") currItems[itemIndex].price = value;
     dispatch({ type: CHANGE_CONTEXT_ITEM_DATA, payload: currItems })
+  }
+
+  const changeNameVal = ({ personId, value, people }) => {
+    const currPeople = people;
+    const personIndex = currPeople.findIndex(el => el.id === personId)
+    currPeople[personIndex].name = value;
+    dispatch({ type: CHANGE_CONTEXT_NAME_DATA, payload: currPeople })
   }
 
   const calculateTotal = (items) => {
@@ -97,7 +106,6 @@ const AppProvider = ({ children }) => {
     const peopleArray = currItems[itemIndex].split
     // console.log(peopleArray)
 
-    dispatch({ type: REMOVE_PERSON_FROM_SPLIT, payload: currItems })
 
     const price = parseFloat(currItems[itemIndex].price);
     const totalPpl = peopleArray.length;
@@ -115,6 +123,7 @@ const AppProvider = ({ children }) => {
       }
     }
 
+    dispatch({ type: REMOVE_PERSON_FROM_SPLIT, payload: currItems })
     // for (let i = 0; i < people.length; i++) {
     //   if (peopleArray.includes(people[i].id)) {
     //     console.log(split)
@@ -124,16 +133,84 @@ const AppProvider = ({ children }) => {
 
   }
 
-  const deleteItem = (id, items) => {
+  const deleteItem = (id, price, items, people) => {
     const currItems = items;
+    const currPeople = people;
     const filterRemoved = currItems.filter(item => item.id !== id)
-    dispatch({ type: DELETE_ITEM, payload: filterRemoved })
+
+    // when item is deleted, also remove the corresponding dues entry for each person in its split array
+    const item = items.find(el => el.id === id);
+    const split = item.split;
+    for (const person of currPeople) {
+      if (split.includes(person.id)) {
+        delete person.dues[id];
+      }
+    }
+
+    // recalculate(id, price, currItems, currPeople)
+
+    dispatch({ type: DELETE_ITEM, payload: { filterRemoved, currPeople } })
   }
 
-  const deletePerson = (id, people) => {
+  const deletePerson = (id, items, people) => {
     const currPeople = people;
     const filterRemoved = currPeople.filter(person => person.id !== id)
-    dispatch({ type: DELETE_PERSON, payload: filterRemoved })
+    console.log(filterRemoved)
+
+    // find all items the person was a part of and remove the person from the items
+    const currItems = items;
+    items.map(item => {
+      if (item.split.includes(id)) {
+        // item.split.filter(el => el.id !== id)
+        removePersonFromSplit(items.indexOf(item), id, items, currPeople)
+      }
+    })
+
+    // const personItems = items.filter(item => item.split.includes(id));
+
+
+    dispatch({ type: DELETE_PERSON, payload: { currItems, filterRemoved } })
+  }
+
+  // const recalculate = (itemId, items, people) => {
+  //   const currItems = items;
+  //   const currPeople = people;
+
+  //   const itemIndex = parseInt(itemId[itemId.length - 1]);
+  //   const { price, split } = items[itemIndex];
+  //   const len = split.length;
+  //   const newSplit = price / len;
+
+  //   for (const person of split) {
+  //     const itemIndex = parseInt(itemId[itemId.length - 1]);
+
+  //   }
+
+  // recalculate items for all people.
+  // get the new item price and rerun calculations for dues. This will require:
+  // - going to all the people who belong to the item's split
+  // - recalculating the split for each person, using the new price
+  // - re-assigning the dues entry of the item ID
+  const recalculate = (id, price, items, people) => {
+    const currItems = items;
+    const currPeople = people;
+    const item = currItems.find(item => item.id === id);
+    const split = item.split;
+
+    const floatPrice = parseFloat(price);
+    const totalPpl = split.length;
+    const newSplit = totalPpl === 0 ? 0 : floatPrice / totalPpl
+
+
+    currPeople.map(person => {
+      if (person.dues.hasOwnProperty(id)) {
+        person.dues[id] = newSplit
+      }
+    });
+
+    // console.log(currPeople)
+
+    dispatch({ type: RECALCULATE, payload: currPeople })
   }
 
   // useEffect(() => {
@@ -149,11 +226,13 @@ const AppProvider = ({ children }) => {
         setActiveItem,
         unsetActiveItem,
         changeContextVal,
+        changeNameVal,
         calculateTotal,
         addPersonToSplit,
         removePersonFromSplit,
         deleteItem,
-        deletePerson
+        deletePerson,
+        recalculate
       }}
     >
       {children}

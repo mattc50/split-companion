@@ -12,6 +12,7 @@ import { useAppContext } from '../context/appContext';
 
 import { useSwipe } from '../utils/useSwipe';
 import { Delete } from '@mui/icons-material';
+import AvatarContainer from './AvatarContainer';
 
 const PRIMARY_HEX = "4, 115, 220"
 const SECONDARY_HEX = "33, 33, 33";
@@ -30,16 +31,18 @@ const isTouchDevice = () => {
 
 const touchDevice = isTouchDevice();
 
-const Item = ({ id, item, price }) => {
+const Item = ({ id, item, price, split }) => {
   const {
     items,
+    people,
     activeItem,
     setActiveItem,
     unsetActiveItem,
     isActiveItem,
     changeContextVal,
     calculateTotal,
-    deleteItem
+    deleteItem,
+    recalculate
   } = useAppContext();
 
   // const ref = useRef(null);
@@ -47,7 +50,7 @@ const Item = ({ id, item, price }) => {
 
   const activeIsId = activeItem == id
 
-  const [newPrice, setNewPrice] = useState(item);
+  const [newPrice, setNewPrice] = useState(price);
   // const [priceStr, setPriceStr] = useState(0);
   const [newItem, setNewItem] = useState(item);
   const [active, setActive] = useState(activeIsId);
@@ -61,6 +64,9 @@ const Item = ({ id, item, price }) => {
       // alignItems: "center"
     },
     container: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
       position: "relative",
       zIndex: 1,
       opacity: () => {
@@ -80,12 +86,13 @@ const Item = ({ id, item, price }) => {
       transform: () => swiped ? "translate(-50px)" : "none",
     },
     itemField: {
-      maxWidth: "200px",
+      minWidth: "160px",
+      maxWidth: "240px",
       background: "white",
-
+      flexShrink: 1
     },
     priceField: {
-      maxWidth: "130px",
+      maxWidth: "120px",
       background: "white",
     },
     fieldGroup: {
@@ -144,6 +151,7 @@ const Item = ({ id, item, price }) => {
       value: !e.target.value ? 0 : e.target.value,
       items: items
     })
+    recalculate(id, !e.target.value ? 0 : e.target.value, items, people)
     calculateTotal(items);
   }
 
@@ -258,14 +266,15 @@ const Item = ({ id, item, price }) => {
             {/* <Typography sx={styles.priceStr} className="priceStr" variant="body1">{priceStr}</Typography> */}
           </div>
         </div>
+        <AvatarContainer split={split} />
       </Box >
       <IconButton
         value={id}
         size="large"
         sx={styles.deleteBtn}
         onClick={() => {
-          console.log(`removing item ${id}`)
-          deleteItem(id, items)
+          // console.log(`removing item ${id}`)
+          deleteItem(id, !price ? 0 : price, items, people)
         }
         }
       >

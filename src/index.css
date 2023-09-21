@@ -46,7 +46,3 @@ input[type=number] {
   transition: 0.2s;
   outline: 1px solid var(--primary);
 }
-
-.item-swiped {
-  /* transform: translateX(-50px); */
-}
