@@ -6,13 +6,18 @@ import { initialState, useAppContext } from '../context/appContext';
 
 const styles = {
   root: {
+    // width: "100%",
     margin: "0 16px",
     paddingTop: "1rem"
   },
   container: {
     display: "flex",
     flexDirection: "column",
-    gap: "8px"
+    gap: "8px",
+    // maxHeight: "calc((62.95px* 4.5) + 32px)",
+    maxHeight: "25vh",
+    // overflowX: "visible",
+    overflowY: "auto"
   }
 }
 

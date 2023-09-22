@@ -13,20 +13,22 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
   const container = document.body;
 
   const styles = {
-    // root: {
-    //   // xs: {
-    //   visibility: open ? "visible" : "hidden"
-    //   // }
-    // },
+    root: {
+      // xs: {
+      // }
+    },
     box: {
-      position: 'absolute',
-      top: -40,
+      position: 'fixed',
+      zIndex: "2000",
+      // height: "2rem",
+      top: 64,
       borderTopLeftRadius: 8,
       borderTopRightRadius: 8,
       display: open ? "block" : "none",
       pointerEvent: open ? "auto" : "none",
-      right: 0,
-      left: 0,
+      width: "100%",
+      // right: 0,
+      // left: 0,
       backgroundColor: (theme) => theme.palette.mode === 'light' ? '#fff' : grey[800],
     },
     puller: {
@@ -34,12 +36,15 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
       height: 6,
       backgroundColor: (theme) => theme.palette.mode === 'light' ? grey[300] : grey[900],
       borderRadius: 3,
-      position: 'absolute',
-      top: 8,
-      left: 'calc(50% - 24px)',
+      // position: 'absolute',
+      // top: 8,
+      // left: 'calc(50% - 24px)',
+      margin: "1rem auto"
     },
     modalContent: {
-      paddingTop: "1rem",
+
+      // paddingTop: "1rem",
+
       // height: 'calc(100% - 104px)'
       // height: 'calc(100% - 104px)'
       // (theme) => `calc(${theme.components.MuiDrawer.styleOverrides.root['& .MuiPaper-root'].height} - 16px)`
@@ -56,6 +61,7 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
 
   return (
     <Box sx={styles.root}>
+
       <SwipeableDrawer
         sx={styles.root}
         // disableBackdropTransition={!iOS}
@@ -73,28 +79,20 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
         }}
       >
         <Box sx={styles.box}>
+
           <Box sx={styles.puller} />
-          <Box
-            sx={{
-              px: 2,
-              pb: 2,
-              height: '100%',
-              overflow: 'auto',
-            }}
+          <Typography
+            sx={styles.h1}
+            variant="h1"
+            height="100%"
           >
-            {/* <Skeleton variant="rectangular" height="100%" /> */}
-          </Box>
-          <Container sx={styles.modalContent}>
-            <Typography
-              sx={styles.h1}
-              variant="h1"
-              height="100%"
-            >
-              Tax, Tip, & Share
-            </Typography>
-            <ConfirmForm />
-          </Container>
+            Tax, Tip, & Share
+          </Typography>
         </Box>
+
+        <Container sx={styles.modalContent}>
+          <ConfirmForm />
+        </Container>
         {/* <ConfirmButton /> */}
 
 

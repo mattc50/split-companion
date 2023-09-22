@@ -4,8 +4,11 @@ import { useAppContext } from '../context/appContext'
 
 const styles = {
   root: {
-    position: "absolute",
-    bottom: "1rem",
+    position: "relative",
+    zIndex: "2",
+    // position: "absolute",
+    // bottom: "1rem",
+    margin: "1rem 0 4rem 0"
     // padding: {
     //   xs: "0"
     // }

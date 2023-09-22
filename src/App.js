@@ -66,8 +66,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiPaper-root': {
-            height: `calc(100% - 88px)`,
-            overflow: 'visible',
+            // borderTopLeftRadius: 8,
+            // borderTopRightRadius: 8,
+            height: `calc(100% - 88px - 64px + 6px)`,
+            // setting "auto" will make it scroll only if necessary
+            overflowY: 'auto',
             // '& .MuiBox-root > .MuiContainer-root': {
             //   height: "100%"
             // }
@@ -77,12 +80,10 @@ const theme = createTheme({
     },
     MuiContainer: {
       styleOverrides: {
-
         '& .PrivateSwipeArea-root': {
           display: "none",
           height: 0
-        }
-
+        },
       }
     },
     MuiGrid: {

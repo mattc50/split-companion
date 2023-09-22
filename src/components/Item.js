@@ -83,11 +83,15 @@ const Item = ({ id, item, price, split }) => {
       borderRadius: (theme) => `${theme.shape.borderRadius}px !important`,
       background: "linear-gradient(90deg, #F4FAFF 0%, #F8FBFE 50%, #F4FAFF 100%)",
       transition: "outline, transform 0.1s",
-      outline: () => activeItem !== id ? "1px solid transparent" : `1px solid rgb(${PRIMARY_HEX})`,
+      // outline: () => activeItem !== id ? "1px solid transparent" : `1px solid rgb(${PRIMARY_HEX})`,
       transform: () => swiped ? "translate(-50px)" : "none",
+      // outlineOffset: "-1px",
+      boxShadow: () => activeItem !== id ? "none" : `inset 0px 0px 0px 1px rgb(${PRIMARY_HEX})`,
+
+
     },
     itemField: {
-      minWidth: "120px",
+      // minWidth: "120px",
       width: "100%",
       background: "white",
       flexShrink: "1"

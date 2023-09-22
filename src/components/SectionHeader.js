@@ -11,10 +11,12 @@ import { useAppContext } from '../context/appContext'
 
 const styles = {
   root: {
-    padding: "8px 0",
+    padding: {
+      xs: "1rem 0",
+    },
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   button: {
     textTransform: "capitalize",

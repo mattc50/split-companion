@@ -19,7 +19,9 @@ import ConfirmButton from './ConfirmButton'
 const styles = {
   root: {
     maxWidth: "678px",
-    margin: "0 auto"
+    margin: "0 auto",
+    // height: "80vh",
+    // overflowY: "scroll"
   },
   addIcon: {
     opacity: 0.8,
@@ -35,6 +37,8 @@ const styles = {
     marginBottom: "0.5rem"
   },
   peopleBox: {
+    maxHeight: "300px",
+    overflowY: "auto",
     margin: "1rem 0",
     display: "flex",
     flexDirection: "column",
@@ -162,18 +166,20 @@ const ConfirmForm = () => {
       str += `${yourself.name}: $${grandTotal} \n`
     }
 
-    for (const person of people) {
+    for (let i = 0; i < people.length; i++) {
       let personTotal = 0;
-      const dues = person.dues;
+      const dues = people[i].dues;
       for (const due of Object.values(dues)) personTotal += due;
       const taxTipSplit = addTaxTipSplit(
-        person.dues,
+        people[i].dues,
         selfInCalc ? people.length + 1 : people.length,
-        person.name
+        people[i].name
       );
 
       const grandTotal = parseFloat(personTotal + taxTipSplit).toFixed(2);
-      str += `${person.name}: $${grandTotal} \n`
+      const personName = people[i].name === "" ? `Anon ${i + 1}` : people[i].name
+      console.log(personName)
+      str += `${personName}: $${grandTotal} \n`
     }
 
     return str;
@@ -287,12 +293,12 @@ const ConfirmForm = () => {
 
               taxTipSplit={addTaxTipSplit(
                 yourself.dues,
-                selfInCalc ? people.length + 1 : people.length,
+                selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
                 yourself.name
               ).toFixed(2)}
               grandTotal={getGrandTotal(
                 yourself.dues,
-                selfInCalc ? people.length + 1 : people.length,
+                selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
                 yourself.name
               ).toFixed(2)}
             />}
@@ -311,12 +317,12 @@ const ConfirmForm = () => {
 
                 taxTipSplit={addTaxTipSplit(
                   person.dues,
-                  selfInCalc ? people.length + 1 : people.length,
+                  selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
                   person.name
                 ).toFixed(2)}
                 grandTotal={getGrandTotal(
                   person.dues,
-                  selfInCalc ? people.length + 1 : people.length,
+                  selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
                   person.name
                 ).toFixed(2)}
               />
