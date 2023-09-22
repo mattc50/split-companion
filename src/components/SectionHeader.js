@@ -9,7 +9,7 @@ import { Add } from '@mui/icons-material'
 
 import { useAppContext } from '../context/appContext'
 
-const SectionHeader = ({ use, btnFunc }) => {
+const SectionHeader = ({ use, btnFunc, showNum }) => {
   const styles = {
     root: {
       padding: {
@@ -44,8 +44,8 @@ const SectionHeader = ({ use, btnFunc }) => {
   return (
     <Container sx={styles.root}>
       <div style={styles.text}>
-        <Typography variant="h1" sx={styles.h1}>{use}</Typography>
-        {/* <Typography variant="h2" sx={styles.h2}>{chooseNum(use)}</Typography> */}
+        <Typography variant="h1" sx={styles.h1}>{use} {showNum && `: ${chooseNum(use)}`}</Typography>
+        {showNum && <Typography variant="h2" sx={styles.h2}>Scroll here to see all {use.toLowerCase()}</Typography>}
       </div>
       {btnFunc &&
         <Button

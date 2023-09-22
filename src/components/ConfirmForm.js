@@ -20,7 +20,7 @@ const styles = {
   root: {
     maxWidth: "678px",
     margin: "0 auto",
-    height: "70vh",
+    height: "60vh",
     overflowY: "auto"
   },
   addIcon: {

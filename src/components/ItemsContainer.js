@@ -66,7 +66,7 @@ const ItemsContainer = () => {
       style={styles.root}
       onMouseUp={handleMouseUp}
     >
-      <SectionHeader use="Items" btnFunc={addNewItem} />
+      <SectionHeader use="Items" btnFunc={addNewItem} showNum />
       <div className="items-container" style={styles.container}>
         {items.map((el, index) => (
           <Item

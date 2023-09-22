@@ -59,7 +59,7 @@ const PeopleContainer = () => {
 
   return (
     <div style={styles.root}>
-      <SectionHeader use="People" btnFunc={addNewPerson} />
+      <SectionHeader use="People" btnFunc={addNewPerson} showNum />
       <div className="items-container" style={styles.container}>
         {activeItem && <Yourself id={yourself.id} initial={yourself.initial} name={yourself.name} dues={yourself.dues} />}
         {people.map((el, index) => (
