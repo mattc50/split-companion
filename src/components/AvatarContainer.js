@@ -36,7 +36,7 @@ const AvatarContainer = ({ split }) => {
       alignItems: "center",
       width: "60px",
       minWidth: "60px",
-      marginLeft: "36px",
+      marginLeft: "20px",
       height: "100%",
       padding: "0 0.5rem",
       // overflow: "auto"

@@ -97,7 +97,7 @@ const Item = ({ id, item, price, split }) => {
       // minWidth: "120px",
       width: "100%",
       background: "white",
-      flexShrink: "1"
+      flexGrow: "1"
     },
     priceField: {
       minWidth: "120px",
@@ -225,8 +225,10 @@ const Item = ({ id, item, price, split }) => {
 
   useEffect(() => {
     // console.log('rerun')
+    // might be excessive, but are required for rerendering the component properly
     setNewItem(item)
     setNewPrice(price === 0 ? "" : price)
+
     setSwiped(false)
   }, [items, revItems])
 
