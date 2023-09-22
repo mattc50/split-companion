@@ -34,6 +34,7 @@ const touchDevice = isTouchDevice();
 const Item = ({ id, item, price, split }) => {
   const {
     items,
+    revItems,
     people,
     yourself,
     activeItem,
@@ -49,11 +50,13 @@ const Item = ({ id, item, price, split }) => {
   // const ref = useRef(null);
   // if (ref.current) useSwipe(id, ref.current);
 
-  const activeIsId = activeItem == id
+  // console.log(id);
 
-  const [newPrice, setNewPrice] = useState("");
+  const activeIsId = activeItem === id
+
+  const [newPrice, setNewPrice] = useState(price);
   // const [priceStr, setPriceStr] = useState(0);
-  const [newItem, setNewItem] = useState("");
+  const [newItem, setNewItem] = useState(item);
   const [active, setActive] = useState(activeIsId);
 
   const [swiped, setSwiped] = useState(false);
@@ -221,8 +224,11 @@ const Item = ({ id, item, price, split }) => {
   }
 
   useEffect(() => {
+    // console.log('rerun')
+    setNewItem(item)
+    setNewPrice(price === 0 ? "" : price)
     setSwiped(false)
-  }, [items])
+  }, [items, revItems])
 
   return (
     <Box sx={styles.root}>
@@ -268,6 +274,7 @@ const Item = ({ id, item, price, split }) => {
           </div>
         </div>
         <AvatarContainer split={split} />
+        {/* <Typography>{id}</Typography> */}
       </Box >
       <IconButton
         value={id}

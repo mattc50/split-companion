@@ -54,13 +54,14 @@ const PeopleContainer = () => {
   }
 
   useEffect(() => {
+    // console.log('rerun')
   }, [people, numPeople])
 
 
   return (
     <div style={styles.root}>
       <SectionHeader use="People" btnFunc={addNewPerson} showNum />
-      <div className="items-container" style={styles.container}>
+      <div className="people-container" style={styles.container}>
         {activeItem && <Yourself id={yourself.id} initial={yourself.initial} name={yourself.name} dues={yourself.dues} />}
         {revPeople.map((el, index) => (
           <Person key={index} id={el.id} name={el.name} dues={el.dues} />

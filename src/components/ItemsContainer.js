@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SectionHeader from './SectionHeader'
 import Item from './Item'
 
-import { initialState, useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/appContext';
 
 const styles = {
   root: {
@@ -22,7 +22,7 @@ const styles = {
 }
 
 const ItemsContainer = () => {
-  const { items, numItems, addItem, setItem } = useAppContext()
+  const { items, numItems, revItems, addItem } = useAppContext()
 
   const findFreeId = () => {
     let num = 0;
@@ -59,6 +59,9 @@ const ItemsContainer = () => {
   }
 
   useEffect(() => {
+    // console.log('rerun')
+    // console.log(revItems)
+    // console.log(items)
   }, [items, numItems])
 
   return (
@@ -68,7 +71,7 @@ const ItemsContainer = () => {
     >
       <SectionHeader use="Items" btnFunc={addNewItem} showNum />
       <div className="items-container" style={styles.container}>
-        {items.map((el, index) => (
+        {revItems.map((el, index) => (
           <Item
             key={index}
             id={el.id}

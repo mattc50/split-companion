@@ -25,7 +25,8 @@ const reducer = (state, action) => {
     return {
       ...state,
       items: action.payload,
-      numItems: action.payload.length
+      numItems: action.payload.length,
+      revItems: action.payload.toReversed()
     }
   }
 
@@ -111,7 +112,8 @@ const reducer = (state, action) => {
       items: action.payload.filterRemoved,
       numItems: action.payload.filterRemoved.length,
       people: action.payload.currPeople,
-      yourself: action.payload.yourself
+      yourself: action.payload.yourself,
+      revItems: action.payload.filterRemoved.toReversed()
     }
   }
 

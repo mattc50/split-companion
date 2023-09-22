@@ -222,6 +222,7 @@ const Person = ({ id, name, dues }) => {
     // persists across re-renders regardless of context.
     setNewName(name)
     setNewDues(dues)
+    // console.log('rerun')
   }, [people, items, revPeople])
 
   return (
