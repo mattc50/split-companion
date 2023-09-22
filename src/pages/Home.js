@@ -6,6 +6,7 @@ import ItemsContainer from '../components/ItemsContainer'
 import PeopleContainer from '../components/PeopleContainer'
 import ActionButton from '../components/ActionButton'
 import ConfirmDrawer from '../components/ConfirmDrawer'
+import { useAppContext } from '../context/appContext'
 
 const styles = {
   text: {
@@ -17,8 +18,11 @@ const styles = {
 const Home = () => {
   const [open, setOpen] = useState(false);
 
+  const { toggleConfirm } = useAppContext();
+
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    toggleConfirm(newOpen);
   };
 
   return (

@@ -87,18 +87,19 @@ const Item = ({ id, item, price, split }) => {
       transform: () => swiped ? "translate(-50px)" : "none",
     },
     itemField: {
-      minWidth: "160px",
-      maxWidth: "240px",
+      minWidth: "120px",
+      width: "100%",
       background: "white",
-      flexShrink: 1
+      flexShrink: "1"
     },
     priceField: {
-      maxWidth: "120px",
-      background: "white",
+      minWidth: "120px",
+      background: "white"
     },
     fieldGroup: {
       display: "flex",
-      gap: 8
+      gap: 8,
+      flexGrow: 1
     },
     priceStr: {
       pointerEvents: "none",
@@ -266,8 +267,8 @@ const Item = ({ id, item, price, split }) => {
             />
             {/* <Typography sx={styles.priceStr} className="priceStr" variant="body1">{priceStr}</Typography> */}
           </div>
+          <AvatarContainer split={split} />
         </div>
-        <AvatarContainer split={split} />
       </Box >
       <IconButton
         value={id}

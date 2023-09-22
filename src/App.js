@@ -84,6 +84,16 @@ const theme = createTheme({
         }
 
       }
+    },
+    MuiGrid: {
+      styleOverrides: {
+        // root: {
+        //   // marginRight: "-16px"
+        //   '& .MuiGrid-container': {
+        //     marginLeft: "-16px",
+        //   }
+        // }
+      }
     }
   },
 

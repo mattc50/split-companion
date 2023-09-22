@@ -17,6 +17,10 @@ import SectionHeader from './SectionHeader'
 import ConfirmButton from './ConfirmButton'
 
 const styles = {
+  root: {
+    maxWidth: "678px",
+    margin: "0 auto"
+  },
   addIcon: {
     opacity: 0.8,
     height: "100%",
@@ -31,12 +35,14 @@ const styles = {
     marginBottom: "0.5rem"
   },
   peopleBox: {
-    marginTop: "1rem",
+    margin: "1rem 0",
     display: "flex",
     flexDirection: "column",
     gap: "16px"
   },
   grid: {
+    maxWidth: "678px",
+    // margin: "0 auto",
     height: "100%",
     position: "relative"
   }
@@ -54,7 +60,8 @@ const ConfirmForm = () => {
     changeTip,
     changeTax,
     changeSplitMethod,
-    pushClipboardContent
+    pushClipboardContent,
+    isConfirmOpen
   } = useAppContext()
 
   const [newTax, setTax] = useState(tax);
@@ -152,6 +159,20 @@ const ConfirmForm = () => {
   const compileClipboardContent = () => {
     let str = ""
 
+    if (selfInText) {
+      let yourTotal = 0;
+      const dues = yourself.dues;
+      for (const due of Object.values(dues)) yourTotal += due;
+      const taxTipSplit = addTaxTipSplit(
+        yourself.dues,
+        selfInCalc ? people.length + 1 : people.length,
+        yourself.name
+      );
+
+      const grandTotal = parseFloat(yourTotal + taxTipSplit).toFixed(2);
+      str += `${yourself.name}: $${grandTotal} \n`
+    }
+
     for (const person of people) {
       let personTotal = 0;
       const dues = person.dues;
@@ -166,30 +187,16 @@ const ConfirmForm = () => {
       str += `${person.name}: $${grandTotal} \n`
     }
 
-    if (selfInText) {
-      let yourTotal = 0;
-      const dues = yourself.dues;
-      for (const due of Object.values(dues)) yourTotal += due;
-      const taxTipSplit = addTaxTipSplit(
-        yourself.dues,
-        selfInCalc ? people.length + 1 : people.length,
-        yourself.name
-      );
-
-      const grandTotal = parseFloat(yourTotal + taxTipSplit).toFixed(2);
-      str += `${yourself.name}: $ ${grandTotal} \n`
-    }
-
     return str;
   }
 
   useEffect(() => {
     const str = compileClipboardContent()
     pushClipboardContent(str)
-  }, [people, items])
+  }, [tax, tip, splitMethod, selfInCalc, selfInText, isConfirmOpen])
 
   return (
-    <React.Fragment>
+    <Box sx={styles.root}>
       <Grid sx={styles.grid} container rowSpacing={4} columnSpacing={2}>
         <Grid item xs={5.5}>
           <InputWrapper
@@ -265,6 +272,7 @@ const ConfirmForm = () => {
           />
           <SwitchWrapper
             label="Include yourself in text share"
+            disabled={!selfInCalc}
             checked={selfInText}
             onChange={() => setSelfInText(!selfInText)}
           />
@@ -277,7 +285,7 @@ const ConfirmForm = () => {
 
             if any of these are not true, then you will not see your user on the screen.
             */}
-            {Object.keys(yourself.dues).length > 0 && selfInCalc && <ConfirmPerson
+            {Object.keys(yourself.dues).length > 0 && selfInCalc && selfInText && <ConfirmPerson
               yourself
               name={yourself.name}
               // dues={yourself.dues}
@@ -328,9 +336,7 @@ const ConfirmForm = () => {
         </Grid>
       </Grid>
       <ConfirmButton />
-
-
-    </React.Fragment>
+    </Box>
   )
 }
 

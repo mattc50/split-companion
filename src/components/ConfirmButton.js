@@ -10,7 +10,7 @@ const ConfirmButton = () => {
 
   const styles = {
     root: {
-      position: "absolute",
+      // position: "absolute",
       bottom: "1rem",
     },
     button: {
@@ -18,6 +18,7 @@ const ConfirmButton = () => {
       width: "100%",
       marginBottom: 0,
       padding: "12px 16px",
+      margin: "1rem 0"
     }
   }
 
@@ -67,15 +68,15 @@ const ConfirmButton = () => {
   }
 
   return (
-    <Container sx={styles.root}>
-      <Button
-        variant="contained"
-        sx={styles.button}
-        onClick={copyToClipboard}
-      >
-        {copied ? "Copied to clipboard!" : "Copy to clipboard"}
-      </Button>
-    </Container>
+
+    <Button
+      variant="contained"
+      sx={styles.button}
+      onClick={copyToClipboard}
+    >
+      {copied ? "Copied to clipboard!" : "Copy to clipboard"}
+    </Button>
+
   )
 }
 

@@ -96,6 +96,8 @@ const Person = ({ id, name, dues }) => {
       transition: "transform 0.1s"
     },
     nameField: {
+      minWidth: "120px",
+      width: "100%",
       background: "white",
       '.MuiInputBase-input': {
         color: (theme) => theme.palette.text.secondary,
@@ -108,7 +110,8 @@ const Person = ({ id, name, dues }) => {
     nameGroup: {
       display: "flex",
       alignItems: "center",
-      gap: 8
+      gap: 8,
+      flexGrow: 1,
     },
     deleteBtn: {
       maxHeight: "48px",
@@ -119,6 +122,10 @@ const Person = ({ id, name, dues }) => {
       margin: "auto 0",
       zIndex: 0,
       display: () => activeItem ? "none" : "block"
+    },
+    price: {
+      minWidth: "80px",
+      textAlign: "right"
     }
   }
 
@@ -235,7 +242,7 @@ const Person = ({ id, name, dues }) => {
             sx={styles.nameField}
           />
         </div>
-        <Typography variant="body1">$ {addDues().toFixed(2)}</Typography>
+        <Typography sx={styles.price} variant="body1">$ {addDues().toFixed(2)}</Typography>
       </Box >
       <IconButton
         value={id}

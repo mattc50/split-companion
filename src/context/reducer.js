@@ -16,7 +16,8 @@ import {
   REWRITE_CLIPBOARD_CONTENT,
   CHANGE_TAX,
   CHANGE_TIP,
-  CHANGE_SPLIT_METHOD
+  CHANGE_SPLIT_METHOD,
+  TOGGLE_CONFIRM
 } from './actions'
 
 const reducer = (state, action) => {
@@ -155,6 +156,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       splitMethod: action.payload
+    }
+  }
+
+  if (action.type === TOGGLE_CONFIRM) {
+    return {
+      ...state,
+      isConfirmOpen: action.payload
     }
   }
 

@@ -29,8 +29,13 @@ const AvatarContainer = ({ split }) => {
 
   const styles = {
     avatarContainer: {
-      width: "44px",
+      display: "flex",
+      alignItems: "center",
+      minWidth: "44px",
+      marginLeft: "36px",
       height: "auto",
+      paddingLeft: "0.5rem",
+      // flexGrow: 1
     },
     avatar: {
       position: "relative",

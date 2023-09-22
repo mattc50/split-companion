@@ -1,7 +1,7 @@
 import { FormControlLabel, Switch } from '@mui/material'
 import React from 'react'
 
-const SwitchWrapper = ({ label, checked, onChange }) => {
+const SwitchWrapper = ({ label, checked, onChange, disabled }) => {
   const styles = {
     switchInput: {
       color: (theme) => theme.palette.text.secondary,
@@ -15,7 +15,8 @@ const SwitchWrapper = ({ label, checked, onChange }) => {
   return (
     <FormControlLabel
       control={<Switch
-        checked={checked}
+        disabled={disabled}
+        checked={disabled ? !disabled : checked}
         onChange={onChange}
       />}
       label={label}
