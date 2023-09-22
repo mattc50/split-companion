@@ -73,7 +73,7 @@ const Person = ({ id, name, dues }) => {
         // // }
         // return "100%";
       },
-      outline: () => {
+      boxShadow: () => {
         if (activeItem) {
           const itemIndex = items.findIndex(el => el.id === activeItem)
           const itemSplit = items[itemIndex].split;
