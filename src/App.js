@@ -68,12 +68,16 @@ const theme = createTheme({
           '& .MuiPaper-root': {
             // borderTopLeftRadius: 8,
             // borderTopRightRadius: 8,
-            height: `calc(100% - 88px - 64px + 6px)`,
+            // height: `calc(100% - 88px - 64px + 6px)`,
+            height: `calc(100% - 88px)`,
             // setting "auto" will make it scroll only if necessary
-            overflowY: 'auto',
+            overflowY: 'visible',
             // '& .MuiBox-root > .MuiContainer-root': {
             //   height: "100%"
             // }
+          },
+          '& .MuiPaper-root-MuiDrawer-paper': {
+            // overflowY: "visible"
           }
         }
       }

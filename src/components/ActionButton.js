@@ -8,7 +8,7 @@ const styles = {
     zIndex: "2",
     // position: "absolute",
     // bottom: "1rem",
-    margin: "1rem 0 4rem 0"
+    margin: "2rem 0 4rem 0"
     // padding: {
     //   xs: "0"
     // }

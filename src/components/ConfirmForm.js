@@ -20,8 +20,8 @@ const styles = {
   root: {
     maxWidth: "678px",
     margin: "0 auto",
-    // height: "80vh",
-    // overflowY: "scroll"
+    height: "70vh",
+    overflowY: "auto"
   },
   addIcon: {
     opacity: 0.8,
@@ -37,7 +37,7 @@ const styles = {
     marginBottom: "0.5rem"
   },
   peopleBox: {
-    maxHeight: "300px",
+    maxHeight: "25vh",
     overflowY: "auto",
     margin: "1rem 0",
     display: "flex",
@@ -191,123 +191,100 @@ const ConfirmForm = () => {
   }, [tax, tip, splitMethod, selfInCalc, selfInText, isConfirmOpen])
 
   return (
-    <Box sx={styles.root}>
-      <Grid sx={styles.grid} container rowSpacing={4} columnSpacing={2}>
-        <Grid item xs={5.5}>
-          <InputWrapper
-            htmlFor="tax"
-            label="Tax"
-            onDrop={() => false}
-            // disabled={isActiveItem}
-            onClick={(e) => e.stopPropagation()}
-            inputProps={{ "id": "tax" }}
-            placeholder="0"
-            value={newTax}
-            className="price"
-            onChange={handleTax}
-            // type="number"
-            name="tax"
-          />
-        </Grid>
-        <Grid item xs={1}>
-          <Box sx={styles.addIcon}>
-            <Add color="secondary" />
-          </Box>
-        </Grid>
-        <Grid item xs={5.5}>
-          <InputWrapper
-            htmlFor="tip"
-            label="Tip"
-            onDrop={() => false}
-            // disabled={isActiveItem}
-            onClick={(e) => e.stopPropagation()}
-            inputProps={{ "id": "tip" }}
-            placeholder="0"
-            value={newTip}
-            className="price"
-            onChange={handleTip}
-            // type="number"
-            name="tip"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography sx={styles.radioLabel} color="secondary" variant="body1">Tax & Tip Split</Typography>
-          <RadioGroup
-            row
-            id="split-method"
-          // value={splitMethod}
-          >
-            <Grid container columnSpacing={2}>
-              <Grid item xs={6}>
-                <RadioWrapper
-                  id="equal"
-                  label="Equal"
-                  value="equal"
-                  checked={splitMethod === "equal" ? true : false}
-                  onChange={handleSplitMethod}
-                />
+    <React.Fragment>
+      <Box sx={styles.root}>
+        <Grid sx={styles.grid} container rowSpacing={4} columnSpacing={2}>
+          <Grid item xs={5.5}>
+            <InputWrapper
+              htmlFor="tax"
+              label="Tax"
+              onDrop={() => false}
+              // disabled={isActiveItem}
+              onClick={(e) => e.stopPropagation()}
+              inputProps={{ "id": "tax" }}
+              placeholder="0"
+              value={newTax}
+              className="price"
+              onChange={handleTax}
+              // type="number"
+              name="tax"
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <Box sx={styles.addIcon}>
+              <Add color="secondary" />
+            </Box>
+          </Grid>
+          <Grid item xs={5.5}>
+            <InputWrapper
+              htmlFor="tip"
+              label="Tip"
+              onDrop={() => false}
+              // disabled={isActiveItem}
+              onClick={(e) => e.stopPropagation()}
+              inputProps={{ "id": "tip" }}
+              placeholder="0"
+              value={newTip}
+              className="price"
+              onChange={handleTip}
+              // type="number"
+              name="tip"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography sx={styles.radioLabel} color="secondary" variant="body1">Tax & Tip Split</Typography>
+            <RadioGroup
+              row
+              id="split-method"
+            // value={splitMethod}
+            >
+              <Grid container columnSpacing={2}>
+                <Grid item xs={6}>
+                  <RadioWrapper
+                    id="equal"
+                    label="Equal"
+                    value="equal"
+                    checked={splitMethod === "equal" ? true : false}
+                    onChange={handleSplitMethod}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <RadioWrapper
+                    id="proportional"
+                    label="Proportional"
+                    value="proportional"
+                    checked={splitMethod === "proportional" ? true : false}
+                    onChange={handleSplitMethod}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <RadioWrapper
-                  id="proportional"
-                  label="Proportional"
-                  value="proportional"
-                  checked={splitMethod === "proportional" ? true : false}
-                  onChange={handleSplitMethod}
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </Grid>
-        {Object.keys(yourself.dues).length > 0 && <Grid item xs={12}>
-          <SwitchWrapper
-            label="Include yourself in calculations"
-            checked={selfInCalc}
-            onChange={() => setSelfInCalc(!selfInCalc)}
-          />
-          <SwitchWrapper
-            label="Include yourself in text share"
-            disabled={!selfInCalc}
-            checked={selfInText}
-            onChange={() => setSelfInText(!selfInText)}
-          />
-        </Grid>}
-        <Grid item xs={12}>
-          <SectionHeader use="People" />
-          <Box sx={styles.peopleBox}>
-            {/*
+            </RadioGroup>
+          </Grid>
+          {Object.keys(yourself.dues).length > 0 && <Grid item xs={12}>
+            <SwitchWrapper
+              label="Include yourself in calculations"
+              checked={selfInCalc}
+              onChange={() => setSelfInCalc(!selfInCalc)}
+            />
+            <SwitchWrapper
+              label="Include yourself in text share"
+              disabled={!selfInCalc}
+              checked={selfInText}
+              onChange={() => setSelfInText(!selfInText)}
+            />
+          </Grid>}
+          <Grid item xs={12}>
+            <SectionHeader use="People" />
+            <Box sx={styles.peopleBox}>
+              {/*
             the following line will evaluate if you have any dues for yourself, and if you have included yourself in the calculations.
 
             if any of these are not true, then you will not see your user on the screen.
             */}
-            {Object.keys(yourself.dues).length > 0 && selfInCalc && selfInText && <ConfirmPerson
-              yourself
-              name={yourself.name}
-              // dues={yourself.dues}
-              // tax={tax}
-              // tip={tip}
-              // splitMethod={splitMethod}
-              selfInCalc={selfInCalc}
-              // numPeople={selfInCalc ? people.length + 1 : people.length}
-              // total={total}
-
-              taxTipSplit={addTaxTipSplit(
-                yourself.dues,
-                selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
-                yourself.name
-              ).toFixed(2)}
-              grandTotal={getGrandTotal(
-                yourself.dues,
-                selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
-                yourself.name
-              ).toFixed(2)}
-            />}
-            {people.map((person, index) => (
-              <ConfirmPerson
-                key={index}
-                index={index}
-                name={person.name}
-                // dues={person.dues}
+              {Object.keys(yourself.dues).length > 0 && selfInCalc && selfInText && <ConfirmPerson
+                yourself
+                name={yourself.name}
+                // dues={yourself.dues}
                 // tax={tax}
                 // tip={tip}
                 // splitMethod={splitMethod}
@@ -316,22 +293,48 @@ const ConfirmForm = () => {
                 // total={total}
 
                 taxTipSplit={addTaxTipSplit(
-                  person.dues,
+                  yourself.dues,
                   selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
-                  person.name
+                  yourself.name
                 ).toFixed(2)}
                 grandTotal={getGrandTotal(
-                  person.dues,
+                  yourself.dues,
                   selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
-                  person.name
+                  yourself.name
                 ).toFixed(2)}
-              />
-            ))}
-          </Box>
+              />}
+              {people.map((person, index) => (
+                <ConfirmPerson
+                  key={index}
+                  index={index}
+                  name={person.name}
+                  // dues={person.dues}
+                  // tax={tax}
+                  // tip={tip}
+                  // splitMethod={splitMethod}
+                  selfInCalc={selfInCalc}
+                  // numPeople={selfInCalc ? people.length + 1 : people.length}
+                  // total={total}
+
+                  taxTipSplit={addTaxTipSplit(
+                    person.dues,
+                    selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
+                    person.name
+                  ).toFixed(2)}
+                  grandTotal={getGrandTotal(
+                    person.dues,
+                    selfInCalc && Object.keys(yourself.dues).length > 0 ? people.length + 1 : people.length,
+                    person.name
+                  ).toFixed(2)}
+                />
+              ))}
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
       <ConfirmButton />
-    </Box>
+    </React.Fragment>
+
   )
 }
 

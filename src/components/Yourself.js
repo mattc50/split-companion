@@ -44,12 +44,12 @@ const Yourself = () => {
           return !isPersonInSplit && activeItem ? "75%" : "100%";
         }
       },
-      outline: () => {
+      boxShadow: () => {
         if (activeItem) {
           const itemIndex = items.findIndex(el => el.id === activeItem)
           const itemSplit = items[itemIndex].split;
           const isPersonInSplit = itemSplit.includes(id);
-          return isPersonInSplit && activeItem ? `1px solid rgb(${PRIMARY_HEX})` : "1px solid transparent";
+          return isPersonInSplit && activeItem ? `inset 0px 0px 0px 1px rgb(${PRIMARY_HEX})` : "none"
         }
       },
       cursor: () => {

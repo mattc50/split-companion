@@ -13,6 +13,7 @@ const styles = {
     paddingTop: "1rem",
   },
   container: {
+    transition: "0.1s",
     display: "flex",
     flexDirection: "column",
     gap: "8px",
