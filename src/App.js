@@ -68,6 +68,9 @@ const theme = createTheme({
           '& .MuiPaper-root': {
             height: `calc(100% - 88px)`,
             overflow: 'visible',
+            // '& .MuiBox-root > .MuiContainer-root': {
+            //   height: "100%"
+            // }
           }
         }
       }

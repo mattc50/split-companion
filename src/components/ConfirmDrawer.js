@@ -39,7 +39,10 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
       left: 'calc(50% - 24px)',
     },
     modalContent: {
-      paddingTop: "1rem"
+      paddingTop: "1rem",
+      // height: 'calc(100% - 104px)'
+      // height: 'calc(100% - 104px)'
+      // (theme) => `calc(${theme.components.MuiDrawer.styleOverrides.root['& .MuiPaper-root'].height} - 16px)`
     },
     h1: {
       textAlign: "center",
@@ -92,7 +95,7 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
             <ConfirmForm />
           </Container>
         </Box>
-        <ConfirmButton />
+        {/* <ConfirmButton /> */}
 
 
       </SwipeableDrawer>

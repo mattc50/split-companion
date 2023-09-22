@@ -44,6 +44,7 @@ const styles = {
 
 const ConfirmForm = () => {
   const {
+    items,
     people,
     yourself,
     total,
@@ -150,19 +151,6 @@ const ConfirmForm = () => {
 
   const compileClipboardContent = () => {
     let str = ""
-    if (selfInText) {
-      let yourTotal = 0;
-      const dues = yourself.dues;
-      for (const due of Object.values(dues)) yourTotal += due;
-      const taxTipSplit = addTaxTipSplit(
-        yourself.dues,
-        selfInCalc ? people.length + 1 : people.length,
-        yourself.name
-      );
-
-      const grandTotal = parseFloat(yourTotal + taxTipSplit).toFixed(2);
-      str += `${yourself.name}: $ ${grandTotal} \n`
-    }
 
     for (const person of people) {
       let personTotal = 0;
@@ -178,13 +166,27 @@ const ConfirmForm = () => {
       str += `${person.name}: $${grandTotal} \n`
     }
 
+    if (selfInText) {
+      let yourTotal = 0;
+      const dues = yourself.dues;
+      for (const due of Object.values(dues)) yourTotal += due;
+      const taxTipSplit = addTaxTipSplit(
+        yourself.dues,
+        selfInCalc ? people.length + 1 : people.length,
+        yourself.name
+      );
+
+      const grandTotal = parseFloat(yourTotal + taxTipSplit).toFixed(2);
+      str += `${yourself.name}: $ ${grandTotal} \n`
+    }
+
     return str;
   }
 
   useEffect(() => {
     const str = compileClipboardContent()
     pushClipboardContent(str)
-  }, [setTip, setTax, setSplitMethod])
+  }, [people, items])
 
   return (
     <React.Fragment>
@@ -325,6 +327,7 @@ const ConfirmForm = () => {
           </Box>
         </Grid>
       </Grid>
+      <ConfirmButton />
 
 
     </React.Fragment>
