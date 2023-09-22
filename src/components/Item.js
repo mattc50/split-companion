@@ -100,13 +100,14 @@ const Item = ({ id, item, price, split }) => {
       flexGrow: "1"
     },
     priceField: {
-      minWidth: "120px",
+      width: "120px",
+      // flexGrow: "1",
       background: "white"
     },
     fieldGroup: {
       display: "flex",
       gap: 8,
-      flexGrow: 1
+      flexGrow: "1"
     },
     priceStr: {
       pointerEvents: "none",
