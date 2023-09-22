@@ -3,6 +3,7 @@ import SectionHeader from './SectionHeader'
 import Person from './Person'
 
 import { useAppContext } from '../context/appContext';
+import Yourself from './Yourself';
 
 const styles = {
   root: {
@@ -17,7 +18,7 @@ const styles = {
 }
 
 const PeopleContainer = () => {
-  const { people, addPerson, addPersonToSplit } = useAppContext()
+  const { yourself, people, addPerson, addPersonToSplit, activeItem } = useAppContext()
 
   const findFreeId = () => {
     let num = 0;
@@ -53,7 +54,7 @@ const PeopleContainer = () => {
     <div style={styles.root}>
       <SectionHeader use="People" btnFunc={addNewPerson} />
       <div className="items-container" style={styles.container}>
-
+        {activeItem && <Yourself id={yourself.id} initial={yourself.initial} name={yourself.name} dues={yourself.dues} />}
         {people.map((el, index) => (
           <Person key={index} id={el.id} name={el.name} dues={el.dues} />
         ))}

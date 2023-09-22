@@ -27,13 +27,19 @@ export const initialState = {
   numItems: 0,
   people: [],
   numPeople: 0,
+  yourself: {
+    id: "yourself",
+    initial: "🖐️",
+    name: "Me",
+    dues: {}
+  },
   activeItem: "",
   isActiveItem: false,
   total: 0,
   tax: 0,
   tip: 0,
   splitMethod: "equal",
-  clipboardContent: {}
+  clipboardContent: ""
 }
 
 const AppProvider = ({ children }) => {
@@ -84,7 +90,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CALCULATE_TOTAL, payload: total })
   }
 
-  const addPersonToSplit = (itemIndex, personId, items, people) => {
+  const addPersonToSplit = (itemIndex, personId, items, people, yourself) => {
     const currItems = items;
     const peopleArray = currItems[itemIndex].split;
     peopleArray.push(personId)
@@ -99,10 +105,14 @@ const AppProvider = ({ children }) => {
       }
     }
 
-    dispatch({ type: ADD_PERSON_TO_SPLIT, payload: currItems })
+    if (personId === yourself.id || peopleArray.find(el => el === yourself.id)) {
+      yourself.dues[currItems[itemIndex].id] = parseFloat(split)
+    }
+
+    dispatch({ type: ADD_PERSON_TO_SPLIT, payload: { currItems, yourself } })
   }
 
-  const removePersonFromSplit = (itemIndex, personId, items, people) => {
+  const removePersonFromSplit = (itemIndex, personId, items, people, yourself) => {
     // const currItems = initialState.items;
     // const itemIndex = parseInt(activeItem[activeItem.length - 1]);
     // const splitArray = currItems[itemIndex].split;
@@ -131,7 +141,16 @@ const AppProvider = ({ children }) => {
       }
     }
 
-    dispatch({ type: REMOVE_PERSON_FROM_SPLIT, payload: currItems })
+
+    if (peopleArray.find(el => el === yourself.id)) {
+      yourself.dues[currItems[itemIndex].id] = parseFloat(split)
+    }
+
+    if (personId === yourself.id) {
+      delete yourself.dues[currItems[itemIndex].id];
+    }
+
+    dispatch({ type: REMOVE_PERSON_FROM_SPLIT, payload: { currItems, yourself } })
     // for (let i = 0; i < people.length; i++) {
     //   if (peopleArray.includes(people[i].id)) {
     //     console.log(split)
@@ -141,7 +160,7 @@ const AppProvider = ({ children }) => {
 
   }
 
-  const deleteItem = (id, price, items, people) => {
+  const deleteItem = (id, price, items, people, yourself) => {
     const currItems = items;
     const currPeople = people;
     const filterRemoved = currItems.filter(item => item.id !== id)
@@ -154,14 +173,17 @@ const AppProvider = ({ children }) => {
         delete person.dues[id];
       }
     }
+
+    if (split.includes(yourself.id)) delete yourself.dues[id];
+
     calculateTotal(filterRemoved)
 
     // recalculate(id, price, currItems, currPeople)
 
-    dispatch({ type: DELETE_ITEM, payload: { filterRemoved, currPeople } })
+    dispatch({ type: DELETE_ITEM, payload: { filterRemoved, currPeople, yourself } })
   }
 
-  const deletePerson = (id, items, people) => {
+  const deletePerson = (id, items, people, yourself) => {
     const currPeople = people;
     const filterRemoved = currPeople.filter(person => person.id !== id)
     console.log(filterRemoved)
@@ -171,7 +193,7 @@ const AppProvider = ({ children }) => {
     items.map(item => {
       if (item.split.includes(id)) {
         // item.split.filter(el => el.id !== id)
-        removePersonFromSplit(items.indexOf(item), id, items, currPeople)
+        removePersonFromSplit(items.indexOf(item), id, items, currPeople, yourself)
       }
     })
 
@@ -200,7 +222,7 @@ const AppProvider = ({ children }) => {
   // - going to all the people who belong to the item's split
   // - recalculating the split for each person, using the new price
   // - re-assigning the dues entry of the item ID
-  const recalculate = (id, price, items, people) => {
+  const recalculate = (id, price, items, people, yourself) => {
     const currItems = items;
     const currPeople = people;
     const item = currItems.find(item => item.id === id);
@@ -217,9 +239,13 @@ const AppProvider = ({ children }) => {
       }
     });
 
+    if (yourself.dues.hasOwnProperty(id)) {
+      yourself.dues[id] = newSplit
+    }
+
     // console.log(currPeople)
 
-    dispatch({ type: RECALCULATE, payload: currPeople })
+    dispatch({ type: RECALCULATE, payload: { currPeople, yourself } })
   }
 
   const changeTax = (tax) => {
@@ -234,9 +260,9 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CHANGE_SPLIT_METHOD, payload: splitMethod })
   }
 
-  // const rewriteCBContent = (content) => {
-  //   dispatch({ type: REWRITE_CLIPBOARD_CONTENT, payload: content })
-  // }
+  const pushClipboardContent = (content) => {
+    dispatch({ type: REWRITE_CLIPBOARD_CONTENT, payload: content })
+  }
 
   // useEffect(() => {
   //   console.log('hi')
@@ -261,7 +287,8 @@ const AppProvider = ({ children }) => {
         // rewriteCBContent,
         changeTax,
         changeTip,
-        changeSplitMethod
+        changeSplitMethod,
+        pushClipboardContent
       }}
     >
       {children}

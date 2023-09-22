@@ -74,17 +74,33 @@ const reducer = (state, action) => {
   }
 
   if (action.type === ADD_PERSON_TO_SPLIT) {
+    // if (action.payload.yourself) {
     return {
       ...state,
-      items: action.payload
+      items: action.payload.currItems,
+      yourself: action.payload.yourself
     }
+    // } else {
+    //   return {
+    //     ...state,
+    //     items: action.payload.currItems,
+    //   }
+    // }
   }
 
   if (action.type === REMOVE_PERSON_FROM_SPLIT) {
+    // if (action.payload.yourself) {
     return {
       ...state,
-      items: action.payload
+      items: action.payload.currItems,
+      yourself: action.payload.yourself
     }
+    // } else {
+    //   return {
+    //     ...state,
+    //     items: action.payload.currItems,
+    //   }
+    // }
   }
 
   if (action.type === DELETE_ITEM) {
@@ -92,7 +108,8 @@ const reducer = (state, action) => {
       ...state,
       items: action.payload.filterRemoved,
       numItems: action.payload.filterRemoved.length,
-      people: action.payload.currPeople
+      people: action.payload.currPeople,
+      yourself: action.payload.yourself
     }
   }
 
@@ -108,7 +125,8 @@ const reducer = (state, action) => {
   if (action.type === RECALCULATE) {
     return {
       ...state,
-      people: action.payload
+      people: action.payload.currPeople,
+      yourself: action.payload.yourself
     }
   }
 

@@ -18,6 +18,7 @@ const Person = ({ id, name, dues }) => {
   const {
     items,
     people,
+    yourself,
     activeItem,
     addPersonToSplit,
     removePersonFromSplit,
@@ -139,10 +140,10 @@ const Person = ({ id, name, dues }) => {
       const isPersonInSplit = itemSplit.includes(id);
       if (!isPersonInSplit) {
         // console.log('ran add')
-        addPersonToSplit(itemIndex, id, items, people);
+        addPersonToSplit(itemIndex, id, items, people, yourself);
       } else {
         // console.log('ran remove')
-        removePersonFromSplit(itemIndex, id, items, people);
+        removePersonFromSplit(itemIndex, id, items, people, yourself);
       }
     }
     // if not part of activeItem's split array, add to array
@@ -242,7 +243,7 @@ const Person = ({ id, name, dues }) => {
         sx={styles.deleteBtn}
         onClick={() => {
           // console.log(`deleting ${id}: ${name}`)
-          deletePerson(id, items, people)
+          deletePerson(id, items, people, yourself)
         }}
       >
         <Delete />

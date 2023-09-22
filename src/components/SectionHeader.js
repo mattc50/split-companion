@@ -44,7 +44,7 @@ const SectionHeader = ({ use, btnFunc }) => {
     <Container sx={styles.root}>
       <div style={styles.text}>
         <Typography variant="h1" sx={styles.h1}>{use}</Typography>
-        <Typography variant="h2" sx={styles.h2}>{chooseNum(use)}</Typography>
+        {/* <Typography variant="h2" sx={styles.h2}>{chooseNum(use)}</Typography> */}
       </div>
       {btnFunc &&
         <Button

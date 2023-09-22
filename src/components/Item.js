@@ -35,6 +35,7 @@ const Item = ({ id, item, price, split }) => {
   const {
     items,
     people,
+    yourself,
     activeItem,
     setActiveItem,
     unsetActiveItem,
@@ -151,7 +152,7 @@ const Item = ({ id, item, price, split }) => {
       value: !e.target.value ? 0 : e.target.value,
       items: items
     })
-    recalculate(id, !e.target.value ? 0 : e.target.value, items, people)
+    recalculate(id, !e.target.value ? 0 : e.target.value, items, people, yourself)
     calculateTotal(items);
   }
 
@@ -273,8 +274,8 @@ const Item = ({ id, item, price, split }) => {
         size="large"
         sx={styles.deleteBtn}
         onClick={() => {
-          // console.log(`removing item ${id}`)
-          deleteItem(id, !price ? 0 : price, items, people)
+          // console.log(`removing it em ${id}`)
+          deleteItem(id, !price ? 0 : price, items, people, yourself)
         }
         }
       >

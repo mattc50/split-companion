@@ -3,17 +3,29 @@ import React, { useEffect } from 'react'
 import { useAppContext } from '../context/appContext'
 import { paint } from '../utils/colorPicker'
 
+const PRIMARY = "#0473DC";
+
 const AvatarContainer = ({ split }) => {
-  const { people } = useAppContext()
+  const { people, yourself } = useAppContext()
   const splitPpl = [];
 
+  // for (const person of people) {
+  //   for (const splitPerson of split) {
+  //     if (person.id === splitPerson) {
+  //       splitPpl.push(person);
+  //     }
+  //     // if (splitPerson === yourself.id) splitPpl.push(person);
+  //   }
+  // }
+  if (split.includes(yourself.id)) splitPpl.push(yourself);
+
   for (const person of people) {
-    for (const splitPerson of split) {
-      if (person.id === splitPerson) {
-        splitPpl.push(person);
-      }
+    if (split.includes(person.id)) {
+      console.log("ran")
+      splitPpl.push(person);
     }
   }
+
 
   const styles = {
     avatarContainer: {
@@ -51,8 +63,8 @@ const AvatarContainer = ({ split }) => {
   return (
     <Box sx={styles.avatarContainer}>
       {splitPpl.length <= 6 && splitPpl.map((el, index) => (
-        <Avatar key={index} style={{ backgroundColor: paint(el.name) }} sx={styles.avatar} >
-          {el.name === "" ? "A" : el.name[0].toUpperCase()}
+        <Avatar key={index} style={{ backgroundColor: el.id === "yourself" ? PRIMARY : paint(el.name) }} sx={styles.avatar} >
+          {el.name === "Me" ? yourself.initial : el.name === "" ? "A" : el.name[0].toUpperCase()}
         </Avatar>
       ))}
       {splitPpl.length > 6 && <Typography sx={styles.splitText}>Split<br /><strong>{splitPpl.length}</strong></Typography>}

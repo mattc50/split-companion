@@ -43,14 +43,22 @@ const styles = {
 }
 
 const ConfirmForm = () => {
-  const { people, total, tax, tip, splitMethod, changeTip, changeTax, changeSplitMethod } = useAppContext()
+  const {
+    people,
+    yourself,
+    total,
+    tax,
+    tip,
+    splitMethod,
+    changeTip,
+    changeTax,
+    changeSplitMethod,
+    pushClipboardContent
+  } = useAppContext()
 
-  // const [tax, setTax] = useState(0);
-  // const [tip, setTip] = useState(0);
   const [newTax, setTax] = useState(tax);
   const [newTip, setTip] = useState(tip);
 
-  // const [splitMethod, setSplitMethod] = useState("equal")
   const [newSplitMethod, setSplitMethod] = useState(splitMethod)
   const [selfInCalc, setSelfInCalc] = useState(true)
   const [selfInText, setSelfInText] = useState(true)
@@ -60,8 +68,6 @@ const ConfirmForm = () => {
 
     const strNum = e.target.value.toString();
     const hasDecimal = strNum.includes(".")
-
-    // if (strNum.length > 1) e.target.style.color
 
     if (hasDecimal) {
       max = strNum.indexOf(".") + 3;
@@ -80,8 +86,6 @@ const ConfirmForm = () => {
     console.log(strNum.length)
     const hasDecimal = strNum.includes(".")
 
-    // if (strNum.length > 1) e.target.style.color
-
     if (hasDecimal) {
       console.log('hit')
       max = strNum.indexOf(".") + 3;
@@ -98,6 +102,89 @@ const ConfirmForm = () => {
     setSplitMethod(e.target.value)
     changeSplitMethod(e.target.value)
   }
+
+  const getTotal = (dues) => {
+    let personTotal = 0;
+    for (const value of Object.values(dues)) {
+      personTotal += parseFloat(value)
+    }
+    // setPersonTotal(total);
+    return personTotal
+  }
+
+  const addTaxTipSplit = (dues, numPeople, name) => {
+    let tempTotal = total;
+    const numTax = parseFloat(tax);
+    const numTip = parseFloat(tip);
+    if (numPeople === 0) return 0;
+    if (splitMethod === "equal") {
+      console.log((numTax + numTip) / numPeople)
+      return (numTax + numTip) / numPeople;
+    }
+    if (splitMethod === "proportional") {
+      if (tempTotal === 0) return (numTax + numTip) / numPeople;
+      const personTotal = getTotal(dues);
+      if (!selfInCalc) {
+        const selfTotal = getTotal(yourself.dues);
+        tempTotal -= selfTotal;
+        if (name === "Me") return 0;
+      }
+      // if (name === "Andy") console.log(personTotal)
+      // console.log(personTotal)
+      if (personTotal === 0) return 0;
+      const ratio = personTotal / tempTotal;
+      // console.log(ratio);
+      // if (name === "Andy") console.log((numTax + numTip) * ratio)
+      return (numTax + numTip) * ratio;
+    }
+    return 0;
+  }
+
+  const getGrandTotal = (dues, numPeople, name) => {
+    const grandTotal = getTotal(dues) + addTaxTipSplit(dues, numPeople, name);
+    // const currCBContent = clipboardContent;
+    // currCBContent[name] = grandTotal;
+    // rewriteCBContent(currCBContent);
+    return grandTotal;
+  }
+
+  const compileClipboardContent = () => {
+    let str = ""
+    if (selfInText) {
+      let yourTotal = 0;
+      const dues = yourself.dues;
+      for (const due of Object.values(dues)) yourTotal += due;
+      const taxTipSplit = addTaxTipSplit(
+        yourself.dues,
+        selfInCalc ? people.length + 1 : people.length,
+        yourself.name
+      );
+
+      const grandTotal = parseFloat(yourTotal + taxTipSplit).toFixed(2);
+      str += `${yourself.name}: $ ${grandTotal} \n`
+    }
+
+    for (const person of people) {
+      let personTotal = 0;
+      const dues = person.dues;
+      for (const due of Object.values(dues)) personTotal += due;
+      const taxTipSplit = addTaxTipSplit(
+        person.dues,
+        selfInCalc ? people.length + 1 : people.length,
+        person.name
+      );
+
+      const grandTotal = parseFloat(personTotal + taxTipSplit).toFixed(2);
+      str += `${person.name}: $${grandTotal} \n`
+    }
+
+    return str;
+  }
+
+  useEffect(() => {
+    const str = compileClipboardContent()
+    pushClipboardContent(str)
+  }, [setTip, setTax, setSplitMethod])
 
   return (
     <React.Fragment>
@@ -168,7 +255,7 @@ const ConfirmForm = () => {
             </Grid>
           </RadioGroup>
         </Grid>
-        {/* <Grid item xs={12}>
+        {Object.keys(yourself.dues).length > 0 && <Grid item xs={12}>
           <SwitchWrapper
             label="Include yourself in calculations"
             checked={selfInCalc}
@@ -179,21 +266,60 @@ const ConfirmForm = () => {
             checked={selfInText}
             onChange={() => setSelfInText(!selfInText)}
           />
-        </Grid> */}
+        </Grid>}
         <Grid item xs={12}>
           <SectionHeader use="People" />
           <Box sx={styles.peopleBox}>
+            {/*
+            the following line will evaluate if you have any dues for yourself, and if you have included yourself in the calculations.
+
+            if any of these are not true, then you will not see your user on the screen.
+            */}
+            {Object.keys(yourself.dues).length > 0 && selfInCalc && <ConfirmPerson
+              yourself
+              name={yourself.name}
+              // dues={yourself.dues}
+              // tax={tax}
+              // tip={tip}
+              // splitMethod={splitMethod}
+              selfInCalc={selfInCalc}
+              // numPeople={selfInCalc ? people.length + 1 : people.length}
+              // total={total}
+
+              taxTipSplit={addTaxTipSplit(
+                yourself.dues,
+                selfInCalc ? people.length + 1 : people.length,
+                yourself.name
+              ).toFixed(2)}
+              grandTotal={getGrandTotal(
+                yourself.dues,
+                selfInCalc ? people.length + 1 : people.length,
+                yourself.name
+              ).toFixed(2)}
+            />}
             {people.map((person, index) => (
               <ConfirmPerson
                 key={index}
                 index={index}
                 name={person.name}
-                dues={person.dues}
-                tax={tax}
-                tip={tip}
-                splitMethod={splitMethod}
-                numPeople={people.length}
-                total={total}
+                // dues={person.dues}
+                // tax={tax}
+                // tip={tip}
+                // splitMethod={splitMethod}
+                selfInCalc={selfInCalc}
+                // numPeople={selfInCalc ? people.length + 1 : people.length}
+                // total={total}
+
+                taxTipSplit={addTaxTipSplit(
+                  person.dues,
+                  selfInCalc ? people.length + 1 : people.length,
+                  person.name
+                ).toFixed(2)}
+                grandTotal={getGrandTotal(
+                  person.dues,
+                  selfInCalc ? people.length + 1 : people.length,
+                  person.name
+                ).toFixed(2)}
               />
             ))}
           </Box>

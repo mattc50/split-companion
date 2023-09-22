@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import { useAppContext } from '../context/appContext'
 import { teal } from '@mui/material/colors';
 
-const ConfirmButton = ({ packagedText }) => {
+const ConfirmButton = () => {
 
-  const { people, total, tax, tip, splitMethod } = useAppContext();
+  const { people, total, tax, tip, splitMethod, clipboardContent } = useAppContext();
   const [copied, setCopied] = useState(false)
 
   const styles = {
@@ -21,36 +21,40 @@ const ConfirmButton = ({ packagedText }) => {
     }
   }
 
-  const addTaxTipSplit = (personTotal) => {
-    const numPeople = people.length;
+  // const addTaxTipSplit = (personTotal) => {
+  //   const numPeople = people.length;
 
-    const numTax = parseFloat(tax);
-    const numTip = parseFloat(tip);
-    if (numPeople === 0) return 0;
-    if (splitMethod === "equal") {
-      return (numTax + numTip) / numPeople;
-    }
-    if (splitMethod === "proportional") {
-      if (total === 0) return (numTax + numTip) / numPeople;
-      if (personTotal === 0) return (numTax + numTip) / numPeople
-      const ratio = personTotal / total;
-      return (numTax + numTip) * ratio;
-    }
-    return 0;
-  }
+  //   const numTax = parseFloat(tax);
+  //   const numTip = parseFloat(tip);
+  //   if (numPeople === 0) return 0;
+  //   if (splitMethod === "equal") {
+  //     return (numTax + numTip) / numPeople;
+  //   }
+  //   if (splitMethod === "proportional") {
+  //     if (total === 0) return (numTax + numTip) / numPeople;
+  //     if (personTotal === 0) return (numTax + numTip) / numPeople
+  //     const ratio = personTotal / total;
+  //     return (numTax + numTip) * ratio;
+  //   }
+  //   return 0;
+  // }
 
+  // const copyToClipboard = () => {
+  //   let str = "";
+  //   for (const person of people) {
+  //     let personTotal = 0;
+  //     const dues = person.dues;
+  //     for (const due of Object.values(dues)) personTotal += due;
+  //     const taxTipSplit = addTaxTipSplit(personTotal);
+
+  //     const grandTotal = parseFloat(personTotal + taxTipSplit).toFixed(2);
+  //     str += `${person.name}: $ ${grandTotal} \n`
+  //   }
+  //   navigator.clipboard.writeText(str);
+  //   changeBtnText();
+  // }
   const copyToClipboard = () => {
-    let str = "";
-    for (const person of people) {
-      let personTotal = 0;
-      const dues = person.dues;
-      for (const due of Object.values(dues)) personTotal += due;
-      const taxTipSplit = addTaxTipSplit(personTotal);
-
-      const grandTotal = parseFloat(personTotal + taxTipSplit).toFixed(2);
-      str += `${person.name}: $ ${grandTotal} \n`
-    }
-    navigator.clipboard.writeText(str);
+    navigator.clipboard.writeText(clipboardContent);
     changeBtnText();
   }
 
