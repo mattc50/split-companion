@@ -21,7 +21,7 @@ const AvatarContainer = ({ split }) => {
 
   for (const person of people) {
     if (split.includes(person.id)) {
-      console.log("ran")
+      // console.log("ran")
       splitPpl.push(person);
     }
   }

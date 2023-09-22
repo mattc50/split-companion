@@ -51,9 +51,9 @@ const Item = ({ id, item, price, split }) => {
 
   const activeIsId = activeItem == id
 
-  const [newPrice, setNewPrice] = useState(price);
+  const [newPrice, setNewPrice] = useState("");
   // const [priceStr, setPriceStr] = useState(0);
-  const [newItem, setNewItem] = useState(item);
+  const [newItem, setNewItem] = useState("");
   const [active, setActive] = useState(activeIsId);
 
   const [swiped, setSwiped] = useState(false);
@@ -132,20 +132,15 @@ const Item = ({ id, item, price, split }) => {
   }
 
   const handlePrice = (e) => {
-    let max = 0;
+    // console.log(e.target.value)
+    const regex = /^\d*(?:\.\d{0,2})?$/
 
-    const strNum = e.target.value.toString();
-    const hasDecimal = strNum.includes(".")
-
-    // if (strNum.length > 1) e.target.style.color
-
-    if (hasDecimal) {
-      max = strNum.indexOf(".") + 3;
-
-      if (strNum.length > max) return false;
+    if (e.target.value && !regex.test(e.target.value)) {
+      // console.log(regex.test(e.target.value), e.target.value)
+      return false;
     }
 
-    setNewPrice(!e.target.value ? 0 : e.target.value)
+    setNewPrice(e.target.value)
     // setPriceStr(e.target.value)
     changeContextVal({
       itemId: id,
@@ -259,7 +254,7 @@ const Item = ({ id, item, price, split }) => {
               value={newPrice}
               className="price"
               onChange={handlePrice}
-              type="number"
+              // type="number"
               name="price"
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
               variant="outlined"

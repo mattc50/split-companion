@@ -64,46 +64,35 @@ const ConfirmForm = () => {
     isConfirmOpen
   } = useAppContext()
 
-  const [newTax, setTax] = useState(tax);
-  const [newTip, setTip] = useState(tip);
+  const [newTax, setTax] = useState("");
+  const [newTip, setTip] = useState("");
 
   const [newSplitMethod, setSplitMethod] = useState(splitMethod)
   const [selfInCalc, setSelfInCalc] = useState(true)
   const [selfInText, setSelfInText] = useState(true)
 
   const handleTax = (e) => {
-    let max = 0;
+    const regex = /^\d*(?:\.\d{0,2})?$/
 
-    const strNum = e.target.value.toString();
-    const hasDecimal = strNum.includes(".")
-
-    if (hasDecimal) {
-      max = strNum.indexOf(".") + 3;
-
-      if (strNum.length > max) return false;
+    if (e.target.value && !regex.test(e.target.value)) {
+      // console.log(regex.test(e.target.value), e.target.value)
+      return false;
     }
 
-    setTax(!e.target.value ? 0 : e.target.value)
-    changeTax(e.target.value)
+    setTax(e.target.value)
+    changeTax(!e.target.value ? 0 : e.target.value)
   }
 
   const handleTip = (e) => {
-    let max = 0;
+    const regex = /^\d*(?:\.\d{0,2})?$/
 
-    const strNum = e.target.value.toString();
-    console.log(strNum.length)
-    const hasDecimal = strNum.includes(".")
-
-    if (hasDecimal) {
-      console.log('hit')
-      max = strNum.indexOf(".") + 3;
-      console.log(max)
-
-      if (strNum.length > max) return false;
+    if (e.target.value && !regex.test(e.target.value)) {
+      // console.log(regex.test(e.target.value), e.target.value)
+      return false;
     }
 
-    setTip(!e.target.value ? 0 : e.target.value)
-    changeTip(e.target.value)
+    setTip(e.target.value)
+    changeTip(!e.target.value ? 0 : e.target.value)
   }
 
   const handleSplitMethod = (e) => {
@@ -126,7 +115,7 @@ const ConfirmForm = () => {
     const numTip = parseFloat(tip);
     if (numPeople === 0) return 0;
     if (splitMethod === "equal") {
-      console.log((numTax + numTip) / numPeople)
+      // console.log((numTax + numTip) / numPeople)
       return (numTax + numTip) / numPeople;
     }
     if (splitMethod === "proportional") {
@@ -207,10 +196,10 @@ const ConfirmForm = () => {
             onClick={(e) => e.stopPropagation()}
             inputProps={{ "id": "tax" }}
             placeholder="0"
-            value={tax}
+            value={newTax}
             className="price"
             onChange={handleTax}
-            type="number"
+            // type="number"
             name="tax"
           />
         </Grid>
@@ -228,10 +217,10 @@ const ConfirmForm = () => {
             onClick={(e) => e.stopPropagation()}
             inputProps={{ "id": "tip" }}
             placeholder="0"
-            value={tip}
+            value={newTip}
             className="price"
             onChange={handleTip}
-            type="number"
+            // type="number"
             name="tip"
           />
         </Grid>
