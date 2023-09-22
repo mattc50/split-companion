@@ -25,7 +25,7 @@ const styles = {
 }
 
 const PeopleContainer = () => {
-  const { yourself, people, addPerson, addPersonToSplit, activeItem } = useAppContext()
+  const { yourself, people, numPeople, revPeople, addPerson, activeItem } = useAppContext()
 
   const findFreeId = () => {
     let num = 0;
@@ -54,15 +54,15 @@ const PeopleContainer = () => {
   }
 
   useEffect(() => {
-    // console.log(people)
-  }, [people])
+  }, [people, numPeople])
+
 
   return (
     <div style={styles.root}>
       <SectionHeader use="People" btnFunc={addNewPerson} showNum />
       <div className="items-container" style={styles.container}>
         {activeItem && <Yourself id={yourself.id} initial={yourself.initial} name={yourself.name} dues={yourself.dues} />}
-        {people.map((el, index) => (
+        {revPeople.map((el, index) => (
           <Person key={index} id={el.id} name={el.name} dues={el.dues} />
         ))}
       </div>

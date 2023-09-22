@@ -25,8 +25,10 @@ const AppContext = React.createContext();
 
 export const initialState = {
   items: [],
+  revItems: [],
   numItems: 0,
   people: [],
+  revPeople: [],
   numPeople: 0,
   yourself: {
     id: "yourself",

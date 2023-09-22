@@ -18,6 +18,7 @@ const Person = ({ id, name, dues }) => {
   const {
     items,
     people,
+    revPeople,
     yourself,
     activeItem,
     addPersonToSplit,
@@ -25,9 +26,11 @@ const Person = ({ id, name, dues }) => {
     deletePerson,
     changeNameVal
   } = useAppContext();
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState(name);
   const [newDues, setNewDues] = useState(dues);
   const [swiped, setSwiped] = useState(false);
+
+  // console.log(name)
 
   // const itemIndex = parseInt(id[id.length - 1]);
   // console.log(itemIndex)
@@ -219,7 +222,7 @@ const Person = ({ id, name, dues }) => {
     // persists across re-renders regardless of context.
     setNewName(name)
     setNewDues(dues)
-  }, [people, items])
+  }, [people, items, revPeople])
 
   return (
     <Box sx={styles.root}>

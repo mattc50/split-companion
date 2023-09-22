@@ -33,7 +33,8 @@ const reducer = (state, action) => {
     return {
       ...state,
       people: action.payload,
-      numPeople: action.payload.length
+      numPeople: action.payload.length,
+      revPeople: action.payload.toReversed()
     }
   }
 
@@ -119,7 +120,8 @@ const reducer = (state, action) => {
       ...state,
       people: action.payload.filterRemoved,
       numPeople: action.payload.filterRemoved.length,
-      items: action.payload.currItems
+      items: action.payload.currItems,
+      revPeople: action.payload.filterRemoved.toReversed()
     }
   }
 

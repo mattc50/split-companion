@@ -266,8 +266,8 @@ const Item = ({ id, item, price, split }) => {
             />
             {/* <Typography sx={styles.priceStr} className="priceStr" variant="body1">{priceStr}</Typography> */}
           </div>
-          <AvatarContainer split={split} />
         </div>
+        <AvatarContainer split={split} />
       </Box >
       <IconButton
         value={id}

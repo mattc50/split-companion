@@ -44,7 +44,7 @@ const SectionHeader = ({ use, btnFunc, showNum }) => {
   return (
     <Container sx={styles.root}>
       <div style={styles.text}>
-        <Typography variant="h1" sx={styles.h1}>{use} {showNum && `: ${chooseNum(use)}`}</Typography>
+        <Typography variant="h1" sx={styles.h1}>{use}{showNum && `: ${chooseNum(use)}`}</Typography>
         {/* {showNum && <Typography variant="h2" sx={styles.h2}>Scroll here to see all {use.toLowerCase()}</Typography>} */}
       </div>
       {btnFunc &&
