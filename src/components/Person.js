@@ -237,7 +237,7 @@ const Person = ({ id, name, dues }) => {
         onMouseUp={onMouseUp}
       >
         <div style={styles.nameGroup}>
-          <Avatar style={{ backgroundColor: paint(name) }}>{newName === "" ? "A" : newName[0].toUpperCase()}</Avatar>
+          <Avatar style={{ backgroundColor: paint(name) }}>{newName === "" ? "R" : newName[0].toUpperCase()}</Avatar>
           <TextField
             type="text"
             inputProps={{ "aria-label": "name" }}

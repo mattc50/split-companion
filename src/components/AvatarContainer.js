@@ -74,7 +74,7 @@ const AvatarContainer = ({ split }) => {
     <Box sx={styles.avatarContainer}>
       {splitPpl.length <= 8 && splitPpl.map((el, index) => (
         <Avatar key={index} style={{ backgroundColor: el.id === "yourself" ? PRIMARY : paint(el.name) }} sx={styles.avatar} >
-          {el.name === "Me" ? yourself.initial : el.name === "" ? "A" : el.name[0].toUpperCase()}
+          {el.name === "Me" ? yourself.initial : el.name === "" ? "R" : el.name[0].toUpperCase()}
         </Avatar>
       ))}
       {splitPpl.length > 8 && <Typography sx={styles.splitText}>Split<br /><strong>{splitPpl.length}</strong></Typography>}

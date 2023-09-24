@@ -49,6 +49,10 @@ const styles = {
     // margin: "0 auto",
     height: "100%",
     position: "relative"
+  },
+  btnWrapper: {
+    maxWidth: "678px",
+    margin: "0 auto"
   }
 }
 
@@ -149,6 +153,11 @@ const ConfirmForm = () => {
     return grandTotal;
   }
 
+  const handleSelfInCalc = (selfInCalc) => {
+    setSelfInCalc(!selfInCalc)
+    if (!selfInCalc === false) setSelfInText(false)
+  }
+
   const compileClipboardContent = () => {
     let str = ""
 
@@ -177,7 +186,7 @@ const ConfirmForm = () => {
       );
 
       const grandTotal = parseFloat(personTotal + taxTipSplit).toFixed(2);
-      const personName = people[i].name === "" ? `Anon ${i + 1}` : people[i].name
+      const personName = people[i].name === "" ? `Rando ${i + 1}` : people[i].name
       console.log(personName)
       str += `${personName}: $${grandTotal} \n`
     }
@@ -264,7 +273,7 @@ const ConfirmForm = () => {
             <SwitchWrapper
               label="Include yourself in calculations"
               checked={selfInCalc}
-              onChange={() => setSelfInCalc(!selfInCalc)}
+              onChange={() => handleSelfInCalc(selfInCalc)}
             />
             <SwitchWrapper
               label="Include yourself in text share"
@@ -332,7 +341,9 @@ const ConfirmForm = () => {
           </Grid>
         </Grid>
       </Box>
-      <ConfirmButton />
+      <Box sx={styles.btnWrapper}>
+        <ConfirmButton />
+      </Box>
     </React.Fragment>
 
   )

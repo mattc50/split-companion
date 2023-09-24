@@ -23,7 +23,7 @@ const ConfirmPerson = ({
 }) => {
   // console.log(numPeople)
 
-  const { yourself: self, clipboardContent, rewriteCBContent } = useAppContext();
+  const { yourself: self, clipboardContent } = useAppContext();
 
   // const getTotal = (dues) => {
   //   let personTotal = 0;
@@ -109,9 +109,9 @@ const ConfirmPerson = ({
     <Box sx={styles.root}>
       <div style={styles.nameGroup}>
         <Avatar style={{ backgroundColor: yourself ? PRIMARY : paint(name) }}>
-          {name === "Me" ? self.initial : name === "" ? "A" : name[0].toUpperCase()}
+          {name === "Me" ? self.initial : name === "" ? "R" : name[0].toUpperCase()}
         </Avatar>
-        <Typography color="secondary" variant="body1">{name || `Anon ${index + 1}`}</Typography>
+        <Typography color="secondary" variant="body1">{name || `Rando ${index + 1}`}</Typography>
       </div>
       <div style={styles.prices}>
         <Typography color={teal[700]} variant="body1">+ $ {taxTipSplit}</Typography>

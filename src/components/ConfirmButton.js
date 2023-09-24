@@ -10,11 +10,12 @@ const ConfirmButton = () => {
 
   const styles = {
     root: {
+
       // position: "absolute",
       bottom: "1rem",
     },
     button: {
-      backgroundColor: (theme) => copied ? teal[400] : theme.palette.primary.main,
+      backgroundColor: (theme) => copied ? teal[300] : theme.palette.primary.main,
       width: "100%",
       marginBottom: 0,
       padding: "12px 16px",
@@ -63,7 +64,7 @@ const ConfirmButton = () => {
     setCopied(true);
     setTimeout(() => {
       setCopied(false)
-      return () => clearTimeout();
+      // return () => clearTimeout();
     }, 3000)
   }
 
