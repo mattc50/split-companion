@@ -5,8 +5,9 @@ import { Box, Grid } from '@mui/material'
 import ItemsContainer from '../components/ItemsContainer'
 import PeopleContainer from '../components/PeopleContainer'
 import ActionButton from '../components/ActionButton'
-import ConfirmDrawer from '../components/ConfirmDrawer'
+import ContentDrawer from '../components/ContentDrawer'
 import { useAppContext } from '../context/appContext'
+import ConfirmForm from '../components/ConfirmForm'
 
 const styles = {
   // homeGrid: {
@@ -14,6 +15,7 @@ const styles = {
   //   gridTemplateRows: "100% auto"
   // },
   root: {
+    // overflowX: "visible",
     // width: "100%",
     // marginTop: 0,
     // display: "grid",
@@ -34,7 +36,7 @@ const Home = () => {
 
   const { toggleConfirm } = useAppContext();
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen) => {
     setOpen(newOpen);
     toggleConfirm(newOpen);
   };
@@ -51,7 +53,11 @@ const Home = () => {
       </Box>
       <ActionButton setOpen={setOpen} toggleDrawer={toggleDrawer} />
       {/* </Box> */}
-      <ConfirmDrawer open={open} toggleDrawer={toggleDrawer} />
+      <ContentDrawer
+        open={open}
+        toggleDrawer={toggleDrawer}
+        title="Tax, Tip, & Share"
+        content={<ConfirmForm />} />
     </React.Fragment >
   )
 }

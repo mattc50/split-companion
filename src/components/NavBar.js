@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InfoOutlined } from '@mui/icons-material';
+
 
 
 import {
@@ -10,6 +11,9 @@ import {
   IconButton,
 
 } from '@mui/material';
+import ContentDrawer from './ContentDrawer';
+import { useAppContext } from '../context/appContext';
+import About from './About';
 
 const styles = {
   typography: {
@@ -27,15 +31,37 @@ const styles = {
 }
 
 const NavBar = () => {
+  const [open, setOpen] = useState(false);
+
+  const { toggleInfo } = useAppContext();
+
+  const toggleDrawer = (newOpen) => {
+    setOpen(newOpen);
+    toggleInfo(newOpen);
+  };
+
   return (
-    <AppBar>
-      <Toolbar sx={styles.navBar}>
-        <Typography variant="h1" sx={styles.typography}>Split Companion</Typography>
-        <IconButton sx={styles.icon} size="large">
-          <InfoOutlined />
-        </IconButton>
-      </Toolbar>
-    </AppBar >
+    <React.Fragment>
+
+      <AppBar>
+        <Toolbar sx={styles.navBar}>
+          <Typography variant="h1" sx={styles.typography}>Split Companion</Typography>
+          <IconButton
+            sx={styles.icon}
+            size="large"
+            onClick={() => setOpen(true)}
+          >
+            <InfoOutlined />
+          </IconButton>
+        </Toolbar>
+      </AppBar >
+      <ContentDrawer
+        open={open}
+        toggleDrawer={toggleDrawer}
+        title="About Split Companion"
+        content={<About />}
+      />
+    </React.Fragment>
   )
 }
 

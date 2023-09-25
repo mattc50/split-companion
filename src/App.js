@@ -72,6 +72,7 @@ const theme = createTheme({
             height: `calc(100% - 88px)`,
             // setting "auto" will make it scroll only if necessary
             overflowY: 'visible',
+            // overflowX: "visible",
             // '& .MuiBox-root > .MuiContainer-root': {
             //   height: "100%"
             // }
@@ -98,6 +99,15 @@ const theme = createTheme({
         //     marginLeft: "-16px",
         //   }
         // }
+      }
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          '& .MuiTabs-flexContainer': {
+            justifyContent: "center"
+          }
+        }
       }
     }
   },

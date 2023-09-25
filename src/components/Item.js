@@ -63,7 +63,11 @@ const Item = ({ id, item, price, split }) => {
 
   const styles = {
     root: {
+      zIndex: "3",
       position: "relative",
+      // maxWidth: "400px",
+      // textAlign: "right"
+      overflowX: "visible"
       // display: "flex",
       // alignItems: "center"
     },
@@ -85,16 +89,16 @@ const Item = ({ id, item, price, split }) => {
       padding: "8px !important",
       borderRadius: (theme) => `${theme.shape.borderRadius}px !important`,
       background: "linear-gradient(90deg, #F4FAFF 0%, #F8FBFE 50%, #F4FAFF 100%)",
-      transition: "outline, transform 0.1s",
+      transition: "outline 0.1s, transform 0.1s ease-in-out",
       // outline: () => activeItem !== id ? "1px solid transparent" : `1px solid rgb(${PRIMARY_HEX})`,
-      transform: () => swiped ? "translate(-50px)" : "none",
+      transform: () => swiped ? "translate(-64px)" : "none",
       // outlineOffset: "-1px",
       boxShadow: () => activeItem !== id ? "none" : `inset 0px 0px 0px 1px rgb(${PRIMARY_HEX})`,
 
 
     },
     itemField: {
-      // minWidth: "120px",
+      // maxWidth: "400px",
       width: "100%",
       background: "white",
       flexGrow: "1"

@@ -17,7 +17,8 @@ import {
   CHANGE_TAX,
   CHANGE_TIP,
   CHANGE_SPLIT_METHOD,
-  TOGGLE_CONFIRM
+  TOGGLE_CONFIRM,
+  TOGGLE_INFO
 } from './actions'
 
 const reducer = (state, action) => {
@@ -167,6 +168,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       isConfirmOpen: action.payload
+    }
+  }
+
+  if (action.type === TOGGLE_INFO) {
+    return {
+      ...state,
+      isInfoOpen: action.payload
     }
   }
 

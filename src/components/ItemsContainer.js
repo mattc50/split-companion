@@ -8,7 +8,11 @@ const styles = {
   root: {
     // width: "100%",
     margin: "0 16px",
-    paddingTop: "1rem"
+    paddingTop: "1rem",
+    // overflowX: "visible",
+    // display: "flex",
+    // justifyItems: "end"
+
   },
   container: {
     display: "flex",
@@ -16,7 +20,6 @@ const styles = {
     gap: "8px",
     // maxHeight: "calc((62.95px* 4.5) + 32px)",
     maxHeight: "25vh",
-    // overflowX: "visible",
     overflowY: "auto"
   }
 }

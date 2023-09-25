@@ -24,3 +24,4 @@ export const CHANGE_TIP = 'CHANGE_TIP'
 export const CHANGE_SPLIT_METHOD = 'CHANGE_SPLIT_METHOD'
 
 export const TOGGLE_CONFIRM = 'TOGGLE_CONFIRM';
+export const TOGGLE_INFO = 'TOGGLE_INFO';

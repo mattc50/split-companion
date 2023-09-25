@@ -64,7 +64,7 @@ const ConfirmButton = () => {
     setCopied(true);
     setTimeout(() => {
       setCopied(false)
-      // return () => clearTimeout();
+      return () => clearTimeout();
     }, 3000)
   }
 

@@ -45,7 +45,7 @@ const ActionButton = ({ toggleDrawer }) => {
         disabled={people.length === 0 || items.length === 0}
         variant="contained"
         sx={styles.button}
-        onClick={activeItem ? unsetActiveItem : toggleDrawer(true)}
+        onClick={activeItem ? unsetActiveItem : () => toggleDrawer(true)}
       >
         {setBtnText()}
       </Button>

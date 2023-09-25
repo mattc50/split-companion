@@ -18,7 +18,8 @@ import {
   CHANGE_TAX,
   CHANGE_TIP,
   CHANGE_SPLIT_METHOD,
-  TOGGLE_CONFIRM
+  TOGGLE_CONFIRM,
+  TOGGLE_INFO
 } from './actions'
 
 const AppContext = React.createContext();
@@ -43,7 +44,8 @@ export const initialState = {
   tip: 0,
   splitMethod: "equal",
   clipboardContent: "",
-  isConfirmOpen: false
+  isConfirmOpen: false,
+  isInfoOpen: false
 }
 
 const AppProvider = ({ children }) => {
@@ -276,6 +278,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: TOGGLE_CONFIRM, payload: open });
   }
 
+  const toggleInfo = (open) => {
+    dispatch({ type: TOGGLE_INFO, payload: open });
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -297,7 +303,8 @@ const AppProvider = ({ children }) => {
         changeTip,
         changeSplitMethod,
         pushClipboardContent,
-        toggleConfirm
+        toggleConfirm,
+        toggleInfo
       }}
     >
       {children}

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import ConfirmForm from './ConfirmForm';
 import ConfirmButton from './ConfirmButton';
 
-const ConfirmDrawer = ({ open, toggleDrawer }) => {
+const Drawer = ({ open, toggleDrawer, title, content }) => {
   const iOS =
     typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -65,8 +65,8 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
         // container={container}
         anchor="bottom"
         open={open}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
+        onClose={() => toggleDrawer(false)}
+        onOpen={() => toggleDrawer(true)}
         // prevents the bottom from being unclickable due to swipeArewWidth
         swipeAreaWidth={0}
         disableSwipeToOpen={false}
@@ -92,9 +92,9 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
               variant="h1"
               height="100%"
             >
-              Tax, Tip, & Share
+              {title}
             </Typography>
-            <ConfirmForm />
+            {content}
           </Container>
         </Box>
         {/* <ConfirmButton /> */}
@@ -105,4 +105,4 @@ const ConfirmDrawer = ({ open, toggleDrawer }) => {
   )
 }
 
-export default ConfirmDrawer
+export default Drawer
