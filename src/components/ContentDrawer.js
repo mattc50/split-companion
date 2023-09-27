@@ -10,7 +10,6 @@ const Drawer = ({ open, toggleDrawer, title, content }) => {
     typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const drawerBleeding = 56;
-  const container = document.body;
 
   const styles = {
     // root: {
@@ -86,7 +85,7 @@ const Drawer = ({ open, toggleDrawer, title, content }) => {
           >
             {/* <Skeleton variant="rectangular" height="100%" /> */}
           </Box>
-          <Container sx={styles.modalContent}>
+          <Box sx={styles.modalContent}>
             <Typography
               sx={styles.h1}
               variant="h1"
@@ -95,7 +94,7 @@ const Drawer = ({ open, toggleDrawer, title, content }) => {
               {title}
             </Typography>
             {content}
-          </Container>
+          </Box>
         </Box>
         {/* <ConfirmButton /> */}
 

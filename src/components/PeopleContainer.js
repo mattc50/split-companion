@@ -11,6 +11,10 @@ const styles = {
     // width: "100%",
     margin: "0 16px",
     paddingTop: "1rem",
+    // padding: "1rem 0",
+    // overflowY: "auto"
+    overflowY: "hidden"
+
   },
   container: {
     transition: "0.1s",
@@ -18,7 +22,9 @@ const styles = {
     flexDirection: "column",
     gap: "8px",
     // maxHeight: "calc((62.95px* 4.5) + 32px)",
-    maxHeight: "25vh",
+    // maxHeight: "25vh",
+    // maxHeight: "100%",
+    maxHeight: "calc(100% - 4rem)",
     overflowY: "auto"
     // overflowX: "visible",
   }

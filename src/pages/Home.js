@@ -9,6 +9,14 @@ import ContentDrawer from '../components/ContentDrawer'
 import { useAppContext } from '../context/appContext'
 import ConfirmForm from '../components/ConfirmForm'
 
+// let pageHeight = window.innerHeight;
+
+// window.addEventListener('resize', () => {
+//   console.log('new height', window.innerHeight)
+//   pageHeight = window.innerHeight;
+//   // console.log('resizing')
+// });
+
 const styles = {
   // homeGrid: {
   //   display: "grid",
@@ -19,11 +27,21 @@ const styles = {
     // width: "100%",
     // marginTop: 0,
     // display: "grid",
-    maxHeight: (theme) => {
-      return `calc(100vh - ${theme.mixins.toolbar.minHeight}px - 52px - 2rem)`
+    // height: (theme) => {
+    //   return `calc(100vh - ${theme.mixins.toolbar.minHeight}px - 52px - 2rem)`
+    // },
+    height: (theme) => {
+      return {
+        xs: `calc(100vh - 68px - ${theme.mixins.toolbar.minHeight}px)`,
+        sm: `calc(100vh - 68px - ${theme.mixins.toolbar.minHeight}px - 8px)`
+        // xs: `calc(100% - ${theme.mixins.toolbar.minHeight}px)`,
+        // sm: `calc(100% - ${theme.mixins.toolbar.minHeight}px - 8px)`
+      }
     },
     // gridTemplateRows: "1fr 1fr auto",
     // gap: "2rem"
+    display: "grid",
+    gridTemplateRows: "1fr 1fr auto"
   },
   text: {
     backgroundColor: "#ff0000"
@@ -50,8 +68,8 @@ const Home = () => {
 
         <ItemsContainer />
         <PeopleContainer />
+        <ActionButton setOpen={setOpen} toggleDrawer={toggleDrawer} />
       </Box>
-      <ActionButton setOpen={setOpen} toggleDrawer={toggleDrawer} />
       {/* </Box> */}
       <ContentDrawer
         open={open}

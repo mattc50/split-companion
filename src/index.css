@@ -14,7 +14,7 @@
 
 
 body {
-  height: 100vh;
+  height: calc(100vh - 68px);
   position: relative;
   min-width: 390px;
   max-width: 678px;

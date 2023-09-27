@@ -9,9 +9,12 @@ const styles = {
     // width: "100%",
     margin: "0 16px",
     paddingTop: "1rem",
+    // padding: "1rem 0",
     // overflowX: "visible",
     // display: "flex",
     // justifyItems: "end"
+    // overflowY: "auto"
+    overflowY: "hidden"
 
   },
   container: {
@@ -19,7 +22,9 @@ const styles = {
     flexDirection: "column",
     gap: "8px",
     // maxHeight: "calc((62.95px* 4.5) + 32px)",
-    maxHeight: "25vh",
+    // maxHeight: "25vh",
+    // maxHeight: "100%",
+    maxHeight: "calc(100% - 4rem)",
     overflowY: "auto"
   }
 }

@@ -90,6 +90,9 @@ const Yourself = () => {
       margin: "auto 0",
       zIndex: 0,
       display: () => activeItem ? "none" : "block"
+    },
+    typography: {
+      paddingLeft: "11px"
     }
   }
 
@@ -186,7 +189,7 @@ const Yourself = () => {
       >
         <div style={styles.nameGroup}>
           <Avatar style={{ backgroundColor: `rgb(${PRIMARY_HEX})` }}>{initial}</Avatar>
-          <Typography>Add to myself</Typography>
+          <Typography sx={styles.typography}>Add to myself</Typography>
         </div>
         <Typography variant="body1">$ {addDues().toFixed(2)}</Typography>
       </Box >

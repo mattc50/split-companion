@@ -15,10 +15,23 @@ const PRIMARY_HEX = "4, 115, 220";
 const SECONDARY = "#212121";
 const SECONDARY_HEX = "33, 33, 33";
 
+// let pageHeight = window.innerHeight;
+
+// window.addEventListener('resize', () => {
+//   pageHeight = window.innerHeight;
+//   console.log('resizing')
+// });
 
 const theme = createTheme({
   components: {
     // helpful link: https://mui.com/material-ui/api/input-base/#css
+    // MuiCssBaseline: {
+    //   styleOverrides: {
+    //     body: {
+    //       height: `${pageHeight}px`
+    //     }
+    //   }
+    // },
     MuiInputBase: {
       styleOverrides: {
         root: {
@@ -69,9 +82,11 @@ const theme = createTheme({
             // borderTopLeftRadius: 8,
             // borderTopRightRadius: 8,
             // height: `calc(100% - 88px - 64px + 6px)`,
-            height: `calc(100% - 88px)`,
+            height: `calc(100vh - 88px)`,
+            // height: `calc(${pageHeight}px - 88px)`,
             // setting "auto" will make it scroll only if necessary
             overflowY: 'visible',
+            // padding: "1rem",
             // overflowX: "visible",
             // '& .MuiBox-root > .MuiContainer-root': {
             //   height: "100%"

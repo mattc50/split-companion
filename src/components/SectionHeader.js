@@ -13,7 +13,8 @@ const SectionHeader = ({ use, btnFunc, showNum }) => {
   const styles = {
     root: {
       padding: {
-        xs: use === "Items" ? "0 0 1rem 0" : "1rem 0"
+        // xs: use === "Items" ? "0 0 1rem 0" : "1rem 0"
+        xs: "0 0 1rem 0"
       },
       display: "flex",
       alignItems: "center",

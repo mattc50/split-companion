@@ -6,12 +6,13 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 import AuthorCard from './AuthorCard';
+import Carousel from './Carousel';
 
 const styles = {
   root: {
     maxWidth: "678px",
     margin: "0 auto",
-    height: "60vh",
+    // height: "60vh",
     overflowY: "auto"
   },
 }
@@ -59,6 +60,7 @@ const About = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
+        <Carousel />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <AuthorCard />

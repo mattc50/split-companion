@@ -89,12 +89,14 @@ const Item = ({ id, item, price, split }) => {
       padding: "8px !important",
       borderRadius: (theme) => `${theme.shape.borderRadius}px !important`,
       background: "linear-gradient(90deg, #F4FAFF 0%, #F8FBFE 50%, #F4FAFF 100%)",
-      transition: "outline 0.1s, transform 0.1s ease-in-out",
+      transition: "outline 0.1s, transform 0.1s ease-in",
       // outline: () => activeItem !== id ? "1px solid transparent" : `1px solid rgb(${PRIMARY_HEX})`,
       transform: () => swiped ? "translate(-64px)" : "none",
       // outlineOffset: "-1px",
       boxShadow: () => activeItem !== id ? "none" : `inset 0px 0px 0px 1px rgb(${PRIMARY_HEX})`,
-
+      '&button:focus': {
+        transform: "translate(-64px)"
+      }
 
     },
     itemField: {
@@ -129,7 +131,7 @@ const Item = ({ id, item, price, split }) => {
       right: 0,
       margin: "auto 0",
       zIndex: 0,
-      display: () => activeItem ? "none" : "block"
+      display: () => activeItem ? "none" : "block",
     }
   }
 
@@ -240,6 +242,7 @@ const Item = ({ id, item, price, split }) => {
   return (
     <Box sx={styles.root}>
       <Box
+        className="item"
         id={id}
         sx={styles.container}
         onClick={handleClick}
@@ -290,8 +293,7 @@ const Item = ({ id, item, price, split }) => {
         onClick={() => {
           // console.log(`removing it em ${id}`)
           deleteItem(id, !price ? 0 : price, items, people, yourself)
-        }
-        }
+        }}
       >
         <Delete />
       </IconButton>

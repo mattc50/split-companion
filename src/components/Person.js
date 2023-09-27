@@ -98,7 +98,7 @@ const Person = ({ id, name, dues }) => {
       borderRadius: (theme) => `${theme.shape.borderRadius}px !important`,
       background: "linear-gradient(90deg, #F4FAFF 0%, #F8FBFE 50%, #F4FAFF 100%)",
       transform: () => swiped ? "translate(-64px)" : "none",
-      transition: "transform 0.1s ease-in-out"
+      transition: "transform 0.1s ease-in"
     },
     nameField: {
       minWidth: "120px",
