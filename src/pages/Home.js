@@ -32,8 +32,8 @@ const styles = {
     // },
     height: (theme) => {
       return {
-        xs: `calc(100vh - 68px - ${theme.mixins.toolbar.minHeight}px)`,
-        sm: `calc(100vh - 68px - ${theme.mixins.toolbar.minHeight}px - 8px)`
+        xs: `calc(100vh - 68px - ${theme.mixins.toolbar.minHeight}px - 16px - 24px)`,
+        sm: `calc(100vh - 68px - ${theme.mixins.toolbar.minHeight}px - 8px - 16px - 24px)`
         // xs: `calc(100% - ${theme.mixins.toolbar.minHeight}px)`,
         // sm: `calc(100% - ${theme.mixins.toolbar.minHeight}px - 8px)`
       }

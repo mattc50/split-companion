@@ -21,7 +21,7 @@ const styles = {
     maxWidth: "678px",
     margin: "0 auto",
     // height: "60vh",
-    height: "calc(100vh - 68px - 124px)",
+    height: "calc(100vh - 68px - 124px - 52px + 12px)",
     overflowY: "auto",
     display: "grid",
     gridTemplateRows: "1fr auto"

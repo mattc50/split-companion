@@ -23,7 +23,7 @@ const styles = {
     width: "100%",
     // margin: "0 1rem",
     marginBottom: 0,
-    padding: "12px 16px",
+    // padding: "12px 16px",
   }
 }
 

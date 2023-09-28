@@ -81,8 +81,13 @@ const theme = createTheme({
           '& .MuiPaper-root': {
             // borderTopLeftRadius: 8,
             // borderTopRightRadius: 8,
-            // height: `calc(100% - 88px - 64px + 6px)`,
-            height: `calc(100vh - 88px)`,
+            height: `calc(100% - 88px)`,
+            // height: (theme) => {
+            //   return {
+            //     xs: `calc(100% - 88px - ${theme.mixins.toolbar.minHeight}px)`,
+            //     sm: `calc(100% - 88px - ${theme.mixins.toolbar.minHeight}px - 8px)`,
+            //   }
+            // },
             // height: `calc(${pageHeight}px - 88px)`,
             // setting "auto" will make it scroll only if necessary
             overflowY: 'visible',

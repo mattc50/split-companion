@@ -36,7 +36,7 @@ const styles = {
   h2: {
     // display: "inline-flex",
     // verticalAlign: "middle",
-    maxWidth: "100%",
+    maxWidth: "390px",
     // width: "100%",
     textWrap: "wrap",
     textAlign: "center",
@@ -48,6 +48,7 @@ const styles = {
     }
   },
   orderedList: {
+    maxWidth: "390px",
     textWrap: "wrap",
     textAlign: "left",
     '& ol': {
@@ -62,6 +63,7 @@ const styles = {
     }
   },
   unorderedList: {
+    maxWidth: "390px",
     textWrap: "wrap",
     textAlign: "left",
     '& ul': {
@@ -76,7 +78,7 @@ const styles = {
   },
   gif: {
     marginBottom: "1rem",
-    width: "50%"
+    width: "40%"
   }
 }
 
@@ -87,10 +89,10 @@ const Step1 = () => {
         <Typography sx={styles.h1} variant="h1">
           <strong>1.</strong> Add Items
         </Typography>
-        <Typography sx={styles.h2} variant="body1" gutterBottom>
+        <Typography noWrap={false} sx={styles.h2} variant="body1" gutterBottom>
           Simply click on <strong>+ Add</strong> to add a new item.
         </Typography>
-        <Typography sx={styles.h2} variant="body1" gutterBottom>
+        <Typography noWrap={false} sx={styles.h2} variant="body1" gutterBottom>
           Items can be removed by swiping to the right and clicking on the <Delete /> icon.
         </Typography>
         <img
@@ -109,7 +111,7 @@ const Step2 = () => {
         <Typography sx={styles.h1} variant="h1" color="secondary">
           <strong>2.</strong> Add People
         </Typography>
-        <Typography sx={styles.h2} variant="body1" color="secondary" gutterBottom>
+        <Typography noWrap={false} sx={styles.h2} variant="body1" color="secondary" gutterBottom>
           The process is the same as adding items!
         </Typography>
         <img
@@ -132,7 +134,7 @@ const Step3 = () => {
         {/* <Typography sx={styles.h2} variant="body1" color="secondary" gutterBottom>
           To add people to an item:
         </Typography> */}
-        <Typography sx={styles.orderedList} variant="body1" color="secondary" gutterBottom>
+        <Typography noWrap={false} sx={styles.orderedList} variant="body1" color="secondary" gutterBottom>
           <ol>
             <li>Tap an item.</li>
             <li>Tap the people you want to assign the item to.</li>
@@ -156,10 +158,10 @@ const Step4 = () => {
         <Typography sx={styles.h1} variant="h1" color="secondary">
           <strong>4.</strong> Tax, Tip, & Share
         </Typography>
-        <Typography sx={styles.h2} variant="body1" color="secondary">
+        {/* <Typography noWrap={false} sx={styles.h2} variant="body1" color="secondary">
           Tax, tip, and splitting is made very flexible:
-        </Typography>
-        <Typography sx={styles.unorderedList} variant="body1" color="secondary" gutterBottom>
+        </Typography> */}
+        <Typography noWrap={false} sx={styles.unorderedList} variant="body1" color="secondary" gutterBottom>
           <ul>
             <li>
               <strong>Tax & Tip Split: </strong>
@@ -192,7 +194,7 @@ const Step5 = () => {
         <Typography sx={styles.h1} variant="h1" color="secondary">
           <strong>5.</strong> Copy the dues to Clipboard
         </Typography>
-        <Typography sx={styles.h2} variant="body1" color="secondary" gutterBottom>
+        <Typography noWrap={false} sx={styles.h2} variant="body1" color="secondary" gutterBottom>
           Share the dues with your friends!
         </Typography>
         <img

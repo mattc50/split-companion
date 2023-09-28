@@ -18,7 +18,7 @@ const ConfirmButton = () => {
       backgroundColor: (theme) => copied ? teal[300] : theme.palette.primary.main,
       width: "100%",
       marginBottom: 0,
-      padding: "12px 16px",
+      // padding: "12px 16px",
       margin: "1rem 0"
     }
   }

@@ -11,38 +11,6 @@ import {
 } from '@mui/icons-material';
 import { Step1, Step2, Step3, Step4, Step5 } from './Steps';
 
-const styles = {
-  carouselWrapper: {
-    transition: "0.1s",
-    cursor: "grab",
-    width: "100%",
-    overflowX: "hidden",
-    '& .carousel': {
-      whiteSpace: "nowrap"
-    },
-    '& .dragging': {
-      scrollBehavior: "auto"
-    }
-  },
-  carouselContent: {
-    scrollBehavior: "smooth",
-    width: "auto",
-    display: "flex",
-    gap: "1rem",
-    // overflowX: "auto",
-    overflowX: "hidden",
-    // whiteSpace: "nowrap",
-    // height: "60px",
-    // justifyContent: "center"
-  },
-  mobileStepper: {
-    height: "auto !important",
-    width: "100%",
-    margin: "0 auto",
-    maxWidth: "390px"
-  }
-}
-
 const Carousel = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
@@ -50,6 +18,45 @@ const Carousel = () => {
   const [prevPageX, setPrevPageX] = useState(0)
   const [prevScrollLeft, setPrevScrollLeft] = useState(0)
   const carousel = useRef(null);
+
+  const styles = {
+    carouselWrapper: {
+      transition: "0.1s",
+      cursor: "grab",
+      width: "100%",
+      overflowX: "hidden",
+      '& .carousel': {
+        // whiteSpace: "nowrap"
+      },
+      '& .dragging': {
+        scrollBehavior: "auto"
+      }
+    },
+    carouselContent: {
+      scrollBehavior: "smooth",
+      width: "auto",
+      display: "flex",
+      gap: "1rem",
+      // overflowX: "auto",
+      overflowX: "hidden",
+      // whiteSpace: "nowrap",
+      // height: "60px",
+      // justifyContent: "center"
+    },
+    mobileStepper: {
+      height: "auto !important",
+      width: "100%",
+      margin: "0 auto",
+      maxWidth: "390px",
+      padding: 0
+    },
+    btnLeft: {
+      opacity: activeStep === 0 ? "0" : "1"
+    },
+    btnRight: {
+      opacity: activeStep === 4 ? "0" : "1"
+    }
+  }
 
   let slideWidth, totalWidth;
   if (carousel.current) {
@@ -174,7 +181,7 @@ const Carousel = () => {
         // sx={{ maxWidth: 400, flexGrow: 1 }}
         sx={styles.mobileStepper}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 4}>
+          <Button sx={styles.btnRight} size="small" onClick={handleNext} disabled={activeStep === 4}>
             Next
             {theme.direction === 'rtl' ? (
               <KeyboardArrowLeft />
@@ -184,7 +191,7 @@ const Carousel = () => {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button sx={styles.btnLeft} size="small" onClick={handleBack} disabled={activeStep === 0}>
             {theme.direction === 'rtl' ? (
               <KeyboardArrowRight />
             ) : (
