@@ -17,7 +17,7 @@ import {
 const paint = (name) => {
   if (!name) return;
   const i = name[0].toUpperCase();
-  if (i === "R") return '#b71c1c' || red[900];
+  if (i === "A") return '#b71c1c' || red[900];
   if (i === "B") return '#0d47a1' || blue[900];
   if (i === "C") return '#880e4f' || pink[900];
   if (i === "D") return '#01579b' || lightBlue[900];
